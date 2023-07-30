@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../utils/sequelize';
 
-const DailyEntry = sequelize.define('DailyEntry', {
+const DailyAssessment = sequelize.define('DailyAssessment', {
     id: DataTypes.INTEGER,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
@@ -42,4 +42,4 @@ const DailyEntry = sequelize.define('DailyEntry', {
     otherThoughtsAboutMyDay: DataTypes.STRING,
 });
 
-export default DailyEntry;
+export default DailyAssessment;

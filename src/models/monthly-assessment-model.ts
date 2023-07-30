@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../utils/sequelize';
 
-const MonthlyEntry = sequelize.define('MonthlyEntry', {
+const MonthlyAssessment = sequelize.define('MonthlyAssessment', {
     id: DataTypes.INTEGER,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
@@ -46,4 +46,4 @@ const MonthlyEntry = sequelize.define('MonthlyEntry', {
     whatIsOneThingToWorkOnNextMonth: DataTypes.STRING,
 });
 
-export default MonthlyEntry;
+export default MonthlyAssessment;

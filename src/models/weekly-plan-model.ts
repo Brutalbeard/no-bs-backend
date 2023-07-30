@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../utils/sequelize';
 
-const WeeklyEntry = sequelize.define('WeeklyEntry', {
+const WeeklyPlan = sequelize.define('WeeklyPlan', {
     id: DataTypes.INTEGER,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
@@ -16,4 +16,4 @@ const WeeklyEntry = sequelize.define('WeeklyEntry', {
     weightLossObstaclesThisWeek: DataTypes.STRING,
 });
 
-export default WeeklyEntry;
+export default WeeklyPlan;

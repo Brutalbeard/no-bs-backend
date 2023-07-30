@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../utils/sequelize';
 
-const MonthlyEntry = sequelize.define('MonthlyEntry', {
+const MonthlyPlan = sequelize.define('MonthlyPlan', {
     id: DataTypes.INTEGER,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
@@ -18,4 +18,4 @@ const MonthlyEntry = sequelize.define('MonthlyEntry', {
     whoCanIReachOutToForSupport: DataTypes.STRING,
 });
 
-export default MonthlyEntry;
+export default MonthlyPlan;
