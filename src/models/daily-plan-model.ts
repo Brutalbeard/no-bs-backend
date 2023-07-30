@@ -8,15 +8,20 @@ const DailyEntry = sequelize.define('DailyEntry', {
     date: DataTypes.DATE,
     userId: DataTypes.INTEGER,
 
-    breakfastPlanned: DataTypes.STRING,
+    breakfastPlan: DataTypes.STRING,
+    breakfastType: DataTypes.STRING,
 
-    lunchPlanned: DataTypes.STRING,
+    lunchPlan: DataTypes.STRING,
+    lunchType: DataTypes.STRING,
 
-    dinnerPlanned: DataTypes.STRING,
+    dinnerPlan: DataTypes.STRING,
+    dinnerType: DataTypes.STRING,
 
-    snacksPlanned: DataTypes.STRING,
+    snacksPlan: DataTypes.STRING,
+    snacksType: DataTypes.STRING,
 
-    otherPlanned: DataTypes.STRING,
+    otherPlan: DataTypes.STRING,
+    otherType: DataTypes.STRING,
 
     oneThingIAmGratefulFor: DataTypes.STRING,
     todayMyWhyIs: DataTypes.STRING,
