@@ -9,7 +9,7 @@ import Other from './other-model';
 
 class DailyAssessment extends BaseModel { }
 
-DailyAssessment.init('DailyAssessment', {
+DailyAssessment.init({
     date: DataTypes.DATE,
 
     sixtyFourOuncesOfWater: DataTypes.BOOLEAN,

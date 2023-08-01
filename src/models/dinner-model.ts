@@ -4,7 +4,7 @@ import BaseModel from './base-model';
 import DailyPlan from './daily-plan-model';
 import DailyAssessment from './daily-assessment-model';
 
-class Dinner extends BaseModel {}
+class Dinner extends BaseModel { }
 
 Dinner.init({
     date: DataTypes.DATE,
@@ -17,7 +17,7 @@ Dinner.init({
     modelName: 'Dinner',
 });
 
-Dinner.belongsTo(DailyPlan);
-Dinner.belongsTo(DailyAssessment);
+// Dinner.belongsTo(DailyPlan);
+// Dinner.belongsTo(DailyAssessment);
 
 export default Dinner; 

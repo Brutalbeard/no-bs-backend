@@ -1,7 +1,9 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import sequelize from '../utils/sequelize';
 
-const BaseModel = sequelize.define('BaseModel', {
+class BaseModel extends Model { }
+
+BaseModel.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -9,6 +11,9 @@ const BaseModel = sequelize.define('BaseModel', {
     },
     createdAt: DataTypes.NOW,
     updatedAt: DataTypes.NOW,
+}, {
+    sequelize,
+    modelName: 'BaseModel',
 });
 
 export default BaseModel;

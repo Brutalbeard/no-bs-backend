@@ -7,6 +7,7 @@ import sequelize from './utils/sequelize';
 import indexRouter from './routes/index';
 import deepDiveRouter from './routes/deep-dive';
 import dailyEntryRouter from './routes/daily-entry';
+import mealRouter from './routes/meal';
 
 const app = express();
 
@@ -26,5 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/deep-dive', deepDiveRouter);
 app.use('/daily-entry', dailyEntryRouter);
+app.use('/meal', mealRouter);
 
 export default app;

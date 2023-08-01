@@ -4,7 +4,7 @@ import BaseModel from './base-model';
 
 class DailyHabit extends BaseModel { }
 
-DailyHabit.init('DailyHabit', {
+DailyHabit.init({
     date: DataTypes.DATE,
     madeAPlan: DataTypes.BOOLEAN,
     followedPlan: DataTypes.BOOLEAN,
