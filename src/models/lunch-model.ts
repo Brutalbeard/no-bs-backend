@@ -7,6 +7,7 @@ import DailyAssessment from './daily-assessment-model';
 class Lunch extends BaseModel {}
 
 Lunch.init({
+    date: DataTypes.DATE,
     actual: DataTypes.STRING,
     onPlan: DataTypes.BOOLEAN,
     hungriness: DataTypes.STRING,

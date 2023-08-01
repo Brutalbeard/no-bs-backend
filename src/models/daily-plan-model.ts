@@ -10,7 +10,7 @@ import Other from './other-model';
 class DailyPlan extends BaseModel {}
 
 DailyPlan.init('DailyPlan', {
-
+    date: DataTypes.DATE,
     oneThingIAmGratefulFor: DataTypes.STRING,
     todayMyWhyIs: DataTypes.STRING,
     oneThingIWillFocusOnToLoseWeight: DataTypes.STRING,

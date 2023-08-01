@@ -7,6 +7,7 @@ import DailyAssessment from './daily-assessment-model';
 class Snack extends BaseModel {}
 
 Snack.init({
+    date: DataTypes.DATE,
     actual: DataTypes.STRING,
     onPlan: DataTypes.BOOLEAN,
     hungriness: DataTypes.STRING,

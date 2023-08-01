@@ -1,17 +1,11 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../utils/sequelize';
+import BaseModel from './base-model';
 
-const HabitsDailyEntry = sequelize.define('HabitsDailyEntry', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
+class DailyHabit extends BaseModel { }
+
+DailyHabit.init('DailyHabit', {
     date: DataTypes.DATE,
-    userId: DataTypes.INTEGER,
-    
     madeAPlan: DataTypes.BOOLEAN,
     followedPlan: DataTypes.BOOLEAN,
     assessedPlan: DataTypes.BOOLEAN,
@@ -19,6 +13,9 @@ const HabitsDailyEntry = sequelize.define('HabitsDailyEntry', {
     stoppedAtEnough: DataTypes.BOOLEAN,
     sixtyFourOuncesOfWater: DataTypes.BOOLEAN,
     sevenPlusHoursOfSleep: DataTypes.BOOLEAN,
+},{
+    sequelize,
+    modelName: 'DailyHabit',
 });
 
-export default HabitsDailyEntry;
+export default DailyHabit;
