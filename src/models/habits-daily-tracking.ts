@@ -2,7 +2,11 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../utils/sequelize';
 
 const HabitsDailyEntry = sequelize.define('HabitsDailyEntry', {
-    id: DataTypes.INTEGER,
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
     date: DataTypes.DATE,

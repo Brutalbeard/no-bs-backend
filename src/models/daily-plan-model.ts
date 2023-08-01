@@ -1,33 +1,30 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../utils/sequelize';
+import BaseModel from './base-model';
+import Breakfast from './breakfast-model';
+import Lunch from './lunch-model';
+import Dinner from './dinner-model';
+import Snack from './snack-model';
+import Other from './other-model';
 
-const DailyPlan = sequelize.define('DailyPlan', {
-    id: DataTypes.INTEGER,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-    date: DataTypes.DATE,
-    userId: DataTypes.INTEGER,
+class DailyPlan extends BaseModel {}
 
-    breakfastPlan: DataTypes.STRING,
-    breakfastType: DataTypes.STRING,
-
-    lunchPlan: DataTypes.STRING,
-    lunchType: DataTypes.STRING,
-
-    dinnerPlan: DataTypes.STRING,
-    dinnerType: DataTypes.STRING,
-
-    snacksPlan: DataTypes.STRING,
-    snacksType: DataTypes.STRING,
-
-    otherPlan: DataTypes.STRING,
-    otherType: DataTypes.STRING,
+DailyPlan.init('DailyPlan', {
 
     oneThingIAmGratefulFor: DataTypes.STRING,
     todayMyWhyIs: DataTypes.STRING,
     oneThingIWillFocusOnToLoseWeight: DataTypes.STRING,
     whatIsAnObstacleIWillFaceToday: DataTypes.STRING,
     howWillIOvercomeThisObstacleWithoutFood: DataTypes.STRING,
+}, {
+    sequelize,
+    modelName: 'DailyPlan',
 });
+
+DailyPlan.hasOne(Breakfast);
+DailyPlan.hasOne(Lunch);
+DailyPlan.hasOne(Dinner);
+DailyPlan.hasMany(Snack);
+DailyPlan.hasMany(Other);
 
 export default DailyPlan;

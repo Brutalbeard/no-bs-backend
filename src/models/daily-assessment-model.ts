@@ -1,38 +1,15 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../utils/sequelize';
+import BaseModel from './base-model';
+import Breakfast from './breakfast-model';
+import Lunch from './lunch-model';
+import Dinner from './dinner-model';
+import Snack from './snack-model';
+import Other from './other-model';
 
-const DailyAssessment = sequelize.define('DailyAssessment', {
-    id: DataTypes.INTEGER,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-    date: DataTypes.DATE,
-    userId: DataTypes.INTEGER,
+class DailyAssessment extends BaseModel { }
 
-    breakfastActual: DataTypes.STRING,
-    breakfastOnPlan: DataTypes.BOOLEAN,
-    breakfastHungriness: DataTypes.STRING,
-    breakfastSatisfaction: DataTypes.STRING,
-
-    lunchActual: DataTypes.STRING,
-    lunchOnPlan: DataTypes.BOOLEAN,
-    lunchHungriness: DataTypes.STRING,
-    lunchSatisfaction: DataTypes.STRING,
-
-    dinnerActual: DataTypes.STRING,
-    dinnerOnPlan: DataTypes.BOOLEAN,
-    dinnerHungriness: DataTypes.STRING,
-    dinnerSatisfaction: DataTypes.STRING,
-
-    snacksActual: DataTypes.STRING,
-    snacksOnPlan: DataTypes.BOOLEAN,
-    snacksHungriness: DataTypes.STRING,
-    snacksSatisfaction: DataTypes.STRING,
-
-    otherActual: DataTypes.STRING,
-    otherOnPlan: DataTypes.BOOLEAN,
-    otherHungriness: DataTypes.STRING,
-    otherSatisfaction: DataTypes.STRING,
-
+DailyAssessment.init('DailyAssessment', {
     sixtyFourOuncesOfWater: DataTypes.BOOLEAN,
     sevenPlusHoursOfSleep: DataTypes.BOOLEAN,
 
@@ -40,6 +17,15 @@ const DailyAssessment = sequelize.define('DailyAssessment', {
     whatCanIDoBetterTomorrow: DataTypes.STRING,
     todayIWantToThankMySelfFor: DataTypes.STRING,
     otherThoughtsAboutMyDay: DataTypes.STRING,
+}, {
+    sequelize,
+    modelName: 'DailyAssessment',
 });
+
+DailyAssessment.hasOne(Breakfast);
+DailyAssessment.hasOne(Lunch);
+DailyAssessment.hasOne(Dinner);
+DailyAssessment.hasMany(Snack);
+DailyAssessment.hasMany(Other);
 
 export default DailyAssessment;
