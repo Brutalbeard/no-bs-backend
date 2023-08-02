@@ -1,23 +1,31 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../utils/sequelize';
+
 import BaseModel from './base-model';
 import DailyPlan from './daily-plan-model';
 import DailyAssessment from './daily-assessment-model';
 
-class Breakfast extends BaseModel { }
+class Meal extends BaseModel { }
 
-Breakfast.init({
-    date: DataTypes.DATE,
+Meal.init({
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
     actual: DataTypes.STRING,
     onPlan: DataTypes.BOOLEAN,
     hungriness: DataTypes.STRING,
     satisfaction: DataTypes.STRING,
+    mealType: {
+        type: DataTypes.ENUM('Breakfast', 'Lunch', 'Dinner', 'Other', 'Snack'),
+        allowNull: false,
+    },
 }, {
     sequelize,
-    modelName: 'Breakfast',
+    modelName: 'Meal',
 });
 
-// Breakfast.belongsTo(DailyPlan);
-// Breakfast.belongsTo(DailyAssessment);
+DailyPlan.hasMany(Meal);
+Meal.belongsTo(DailyPlan);
 
-export default Breakfast; 
+export default Meal; 

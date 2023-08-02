@@ -1,16 +1,17 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../utils/sequelize';
-import BaseModel from './base-model';
-import Breakfast from './breakfast-model';
-import Lunch from './lunch-model';
-import Dinner from './dinner-model';
-import Snack from './snack-model';
-import Other from './other-model';
 
-class DailyPlan extends BaseModel {}
+import BaseModel from './base-model';
+import DailyAssessment from './daily-assessment-model';
+import Meal from './meal-model';
+
+class DailyPlan extends BaseModel { }
 
 DailyPlan.init({
-    date: DataTypes.DATE,
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
     oneThingIAmGratefulFor: DataTypes.STRING,
     todayMyWhyIs: DataTypes.STRING,
     oneThingIWillFocusOnToLoseWeight: DataTypes.STRING,
@@ -21,10 +22,7 @@ DailyPlan.init({
     modelName: 'DailyPlan',
 });
 
-DailyPlan.hasOne(Breakfast);
-DailyPlan.hasOne(Lunch);
-DailyPlan.hasOne(Dinner);
-DailyPlan.hasMany(Snack);
-DailyPlan.hasMany(Other);
+DailyPlan.hasOne(DailyAssessment);
+DailyAssessment.belongsTo(DailyPlan);
 
 export default DailyPlan;

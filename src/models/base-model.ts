@@ -14,6 +14,7 @@ BaseModel.init({
 }, {
     sequelize,
     modelName: 'BaseModel',
+    paranoid: true,
 });
 
 export default BaseModel;
