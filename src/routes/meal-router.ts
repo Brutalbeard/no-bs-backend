@@ -12,14 +12,13 @@ router.post('/', async function (req, res, next) {
   let meal = new Meal(req.body)
 
   meal.validate()
-    .then(() => {
-      meal.save()
-        .then((meal) => {
-          res.status(200).send(meal)
-        })
-        .catch((err) => {
-          res.status(400).send(err)
-        })
+    .catch((err) => {
+      res.status(400).send(err)
+    })
+
+  meal.save()
+    .then((meal) => {
+      res.status(200).send(meal)
     })
     .catch((err) => {
       res.status(400).send(err)

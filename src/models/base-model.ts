@@ -1,7 +1,7 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 import sequelize from '../utils/sequelize';
 
-class BaseModel extends Model { }
+class BaseModel extends Model<InferAttributes<BaseModel>,InferCreationAttributes<BaseModel>> { }
 
 BaseModel.init({
     id: {
