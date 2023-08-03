@@ -1,11 +1,38 @@
-import { DataTypes } from 'sequelize';
+import {
+    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
+    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
+    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
+    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
+    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+} from 'sequelize';
 import sequelize from '../utils/sequelize';
-import BaseModel from './base-model';
 
-class DailyHabit extends BaseModel { }
+class DailyHabit extends Model<InferAttributes<DailyHabit>, InferCreationAttributes<DailyHabit>> {
+    declare id: CreationOptional<number>;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+    declare date: Date;
+    declare madeAPlan: boolean | null;
+    declare followedPlan: boolean | null;
+    declare assessedPlan: boolean | null;
+    declare ateWhenHungry: boolean | null;
+    declare stoppedAtEnough: boolean | null;
+    declare sixtyFourOuncesOfWater: boolean | null;
+    declare sevenPlusHoursOfSleep: boolean | null;
+}
 
 DailyHabit.init({
-    date: DataTypes.DATE,
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    createdAt: DataTypes.NOW,
+    updatedAt: DataTypes.NOW,
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
     madeAPlan: DataTypes.BOOLEAN,
     followedPlan: DataTypes.BOOLEAN,
     assessedPlan: DataTypes.BOOLEAN,
@@ -13,7 +40,7 @@ DailyHabit.init({
     stoppedAtEnough: DataTypes.BOOLEAN,
     sixtyFourOuncesOfWater: DataTypes.BOOLEAN,
     sevenPlusHoursOfSleep: DataTypes.BOOLEAN,
-},{
+}, {
     sequelize,
     modelName: 'DailyHabit',
 });
