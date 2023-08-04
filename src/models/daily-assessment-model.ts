@@ -28,7 +28,10 @@ DailyAssessment.init({
     },
     createdAt: DataTypes.NOW,
     updatedAt: DataTypes.NOW,
-    date: DataTypes.DATE,
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
     sixtyFourOuncesOfWater: DataTypes.BOOLEAN,
     sevenPlusHoursOfSleep: DataTypes.BOOLEAN,
     betterThanYesterday: DataTypes.STRING,

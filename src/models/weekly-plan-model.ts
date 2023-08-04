@@ -28,7 +28,10 @@ WeeklyPlan.init({
     },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
-    date: DataTypes.DATE,
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
     poundsToLose: DataTypes.INTEGER,
     differentThisWeek: DataTypes.STRING,
     goalsOutsideScale: DataTypes.STRING,
