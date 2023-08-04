@@ -21,7 +21,11 @@ class WeeklyPlan extends Model<InferAttributes<WeeklyPlan>, InferCreationAttribu
 }
 
 WeeklyPlan.init({
-    id: DataTypes.INTEGER,
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
     date: DataTypes.DATE,

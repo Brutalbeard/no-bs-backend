@@ -26,7 +26,11 @@ class WeeklyAssessment extends Model<InferAttributes<WeeklyAssessment>, InferCre
 }
 
 WeeklyAssessment.init({
-    id: DataTypes.INTEGER,
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
     date: DataTypes.DATE,
