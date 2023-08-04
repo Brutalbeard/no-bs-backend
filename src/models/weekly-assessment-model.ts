@@ -1,7 +1,31 @@
-import { DataTypes } from 'sequelize';
+import {
+    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
+    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
+    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
+    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
+    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+} from 'sequelize';
 import sequelize from '../utils/sequelize';
 
-const WeeklyAssessment = sequelize.define('WeeklyAssessment', {
+class WeeklyAssessment extends Model<InferAttributes<WeeklyAssessment>, InferCreationAttributes<WeeklyAssessment>> {
+    declare id: CreationOptional<number>;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+    declare date: Date;
+    declare userId: number;
+
+    declare thisWeekIWeighed: number;
+    declare planningSelfRatingThisWeek: number;
+    declare planningSelfRatingReason: string;
+    declare waitingForHungerSelfRatingThisWeek: number;
+    declare waitingForHungerSelfRatingReason: string;
+    declare stoppingWhenSatisfiedSelfRatingThisWeek: number;
+    declare stoppingWhenSatisfiedSelfRatingReason: string;
+
+    declare weeklyNotes: string;
+}
+
+WeeklyAssessment.init({
     id: DataTypes.INTEGER,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
@@ -17,6 +41,9 @@ const WeeklyAssessment = sequelize.define('WeeklyAssessment', {
     stoppingWhenSatisfiedSelfRatingReason: DataTypes.STRING,
 
     weeklyNotes: DataTypes.STRING,
+}, {
+    sequelize,
+    modelName: 'WeeklyAssessment',
 });
 
 export default WeeklyAssessment;

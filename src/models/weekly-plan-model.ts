@@ -1,19 +1,40 @@
-import { DataTypes } from 'sequelize';
+import {
+    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
+    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
+    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
+    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
+    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+} from 'sequelize';
+import WeeklyAssessment from './weekly-assessment-model';
 import sequelize from '../utils/sequelize';
 
-const WeeklyPlan = sequelize.define('WeeklyPlan', {
+class WeeklyPlan extends Model<InferAttributes<WeeklyPlan>, InferCreationAttributes<WeeklyPlan>> {
+    declare id: CreationOptional<number>;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+    declare date: Date;
+
+    declare poundsToLose: number;
+    declare differentThisWeek: string;
+    declare goalsOutsideScale: string;
+    declare obstacles: string;
+}
+
+WeeklyPlan.init({
     id: DataTypes.INTEGER,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
     date: DataTypes.DATE,
-    userId: DataTypes.INTEGER,
-
-
-    howManyPoundsToLoseThisWeek: DataTypes.INTEGER,
-    
-    whatCanIDoDifferentlyThisWeek: DataTypes.STRING,
-    whatAreMyGoalsOutsideOfTheScaleThisWeek: DataTypes.STRING,
-    weightLossObstaclesThisWeek: DataTypes.STRING,
+    poundsToLose: DataTypes.INTEGER,
+    differentThisWeek: DataTypes.STRING,
+    goalsOutsideScale: DataTypes.STRING,
+    obstacles: DataTypes.STRING,
+}, {
+    sequelize,
+    modelName: 'WeeklyPlan',
 });
+
+WeeklyPlan.hasOne(WeeklyAssessment);
+WeeklyAssessment.belongsTo(WeeklyPlan);
 
 export default WeeklyPlan;

@@ -1,13 +1,38 @@
-import { DataTypes } from 'sequelize';
+import { 
+    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
+    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
+    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
+    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
+    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+   } from 'sequelize';
 import sequelize from '../utils/sequelize';
 
-import BaseModel from './base-model';
 import DailyPlan from './daily-plan-model';
-import DailyAssessment from './daily-assessment-model';
 
-class Meal extends BaseModel { }
+class Meal extends Model<InferAttributes<Meal>, InferCreationAttributes<Meal>> {
+    declare id: CreationOptional<number>;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+    declare date: Date;
+    declare actual: string | null;
+    declare onPlan: boolean | null;
+    declare hungriness: string | null;
+    declare satisfaction: string | null;
+    declare mealType: "Breakfast" | "Lunch" | "Dinner" | "Other" | "Snack";
+
+    declare getDailyPlan: HasManyGetAssociationsMixin<DailyPlan>;
+    declare setDailyPlan: HasManySetAssociationsMixin<DailyPlan, number>;
+    declare addDailyPlan: HasManyAddAssociationMixin<DailyPlan, number>;
+}
 
 Meal.init({
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    createdAt: DataTypes.NOW,
+    updatedAt: DataTypes.NOW,
     date: {
         type: DataTypes.DATE,
         allowNull: false,

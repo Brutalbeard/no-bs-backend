@@ -1,22 +1,78 @@
-import { DataTypes } from 'sequelize';
+import {
+    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
+    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
+    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
+    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
+    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+} from 'sequelize';
 import sequelize from '../utils/sequelize';
 
-const MonthlyAssessment = sequelize.define('MonthlyAssessment', {
-    id: DataTypes.INTEGER,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
+
+class MonthlyAssessment extends Model<InferAttributes<MonthlyAssessment>, InferCreationAttributes<MonthlyAssessment>> {
+    declare id: CreationOptional<number>;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+    declare date: Date;
+    declare userId: number;
+
+    declare poundsLost: number;
+    declare hoursOfExcercise: number;
+    declare daysOnPlan: number;
+    declare sleepOnPlan: number;
+    declare plansMade: number;
+    declare planedAssessments: number;
+    declare startedFromHungry: number;
+    declare stoppedAtEnough: number;
+    declare drank64OuncesOfWater: number;
+
+    declare startingWeight: number;
+    declare endingWeight: number;
+
+    declare neckMeasurement: number;
+    declare hipMeasurement: number;
+    declare stomachMeasurement: number;
+    declare ribCageMeasurement: number;
+    declare rightThighMeasurement: number;
+    declare letfThighMeasurement: number;
+    declare rightArmMeasurement: number;
+    declare leftArmMeasurement: number;
+
+    declare monthlyNotes: string;
+
+    declare sleepQuality: number;
+    declare selfRating: number;
+    declare stressLevel: number;
+    declare easeAroundFood: number;
+    declare enegryAndMood: number;
+    declare positiveBodyTalk: number;
+    declare selfCompassion: number;
+
+    declare didIWorkOnWhatISaidIWould: boolean;
+    declare didIWorkOnWhatISaidIWouldNotes: string;
+    declare changesNoticed: string;
+    declare workOnNextMonth: string;
+} 
+
+MonthlyAssessment.init({
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    createdAt: DataTypes.NOW,
+    updatedAt: DataTypes.NOW,
     date: DataTypes.DATE,
     userId: DataTypes.INTEGER,
 
-    howManyPoundsDidILoseThisMonthActual: DataTypes.INTEGER,
-    howManyHoursOfExerciseDidIDoThisMonthActual: DataTypes.INTEGER,
-    howManyDaysDidIStayOnPlanThisMonthActual: DataTypes.INTEGER,
-    howManyDaysDidISleepOnPlanThisMonthActual: DataTypes.INTEGER,
-    howManyDaysDidIMakeOnPlanThisMonthPlanned: DataTypes.INTEGER,
-    howManyDaysDidIAssessThePlanThisMonthPlanned: DataTypes.INTEGER,
-    howManyMealsDidIEatStartEatingFromHungry: DataTypes.INTEGER,
-    howManyMealsDidIStopAtEnough: DataTypes.INTEGER,
-    howManyDaysDidIDrink64OuncesOfWater: DataTypes.INTEGER,
+    poundsLost: DataTypes.INTEGER,
+    hoursOfExcercise: DataTypes.INTEGER,
+    daysOnPlan: DataTypes.INTEGER,
+    sleepOnPlan: DataTypes.INTEGER,
+    plansMade: DataTypes.INTEGER,
+    planedAssessments: DataTypes.INTEGER,
+    startedFromHungry: DataTypes.INTEGER,
+    stoppedAtEnough: DataTypes.INTEGER,
+    drank64OuncesOfWater: DataTypes.INTEGER,
 
     startingWeight: DataTypes.INTEGER,
     endingWeight: DataTypes.INTEGER,
@@ -42,8 +98,11 @@ const MonthlyAssessment = sequelize.define('MonthlyAssessment', {
 
     didIWorkOnWhatISaidIWould: DataTypes.BOOLEAN,
     didIWorkOnWhatISaidIWouldNotes: DataTypes.STRING,
-    whatChangesDidINoticeThisMonthBeyondWeight: DataTypes.STRING,
-    whatIsOneThingToWorkOnNextMonth: DataTypes.STRING,
+    changesNoticed: DataTypes.STRING,
+    workOnNextMonth: DataTypes.STRING,
+},{
+    sequelize,
+    modelName: 'MonthlyAssessment',
 });
 
 export default MonthlyAssessment;
