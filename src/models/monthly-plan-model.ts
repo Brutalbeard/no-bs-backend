@@ -1,21 +1,57 @@
-import { DataTypes } from 'sequelize';
+import {
+    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
+    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
+    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
+    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
+    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+} from 'sequelize';
 import sequelize from '../utils/sequelize';
+import WeeklyPlan from './weekly-plan-model';
+import MonthlyAssessment from './monthly-assessment-model';
 
-const MonthlyPlan = sequelize.define('MonthlyPlan', {
-    id: DataTypes.INTEGER,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
+class MonthlyPlan extends Model<InferAttributes<MonthlyPlan>, InferCreationAttributes<MonthlyPlan>> {
+    declare id: CreationOptional<number>;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+    declare date: Date;
+    declare userId: number;
+
+    declare poundsToLose: number;
+
+    declare monthlyNotes: string;
+
+    declare iWantToWorkOn: string;
+    declare howIWillWorkOn: string;
+    declare iWouldFeelSuccess: string;
+    declare supportContacts: string;
+}
+
+MonthlyPlan.init({
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    createdAt: DataTypes.NOW,
+    updatedAt: DataTypes.NOW,
     date: DataTypes.DATE,
     userId: DataTypes.INTEGER,
 
-    howManyPoundsToLoseThisMonth: DataTypes.INTEGER,
+    poundsToLose: DataTypes.INTEGER,
 
     monthlyNotes: DataTypes.STRING,
 
-    thisMonthIWantToWorkOn: DataTypes.STRING,
-    thisMonthPlanToAccomplishWhatIWantToWorkOn: DataTypes.STRING,
-    iWouldFeelSuccessfulByEndOfMonthIf: DataTypes.STRING,
-    whoCanIReachOutToForSupport: DataTypes.STRING,
+    iWantToWorkOn: DataTypes.STRING,
+    howIWillWorkOn: DataTypes.STRING,
+    iWouldFeelSuccess: DataTypes.STRING,
+    supportContacts: DataTypes.STRING,
+}, {
+    sequelize,
+    modelName: 'MonthlyPlan',
 });
+
+MonthlyPlan.hasMany(WeeklyPlan);
+MonthlyPlan.hasOne(MonthlyAssessment);
+MonthlyAssessment.belongsTo(MonthlyPlan);
 
 export default MonthlyPlan;
