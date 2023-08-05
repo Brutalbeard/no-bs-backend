@@ -34,7 +34,10 @@ MonthlyPlan.init({
     },
     createdAt: DataTypes.NOW,
     updatedAt: DataTypes.NOW,
-    date: DataTypes.DATE,
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
     userId: DataTypes.INTEGER,
 
     poundsToLose: DataTypes.INTEGER,

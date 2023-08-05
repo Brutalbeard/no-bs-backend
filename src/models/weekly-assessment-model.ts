@@ -12,7 +12,6 @@ class WeeklyAssessment extends Model<InferAttributes<WeeklyAssessment>, InferCre
     declare createdAt: Date;
     declare updatedAt: Date;
     declare date: Date;
-    declare userId: number;
 
     declare thisWeekIWeighed: number;
     declare planningSelfRatingThisWeek: number;
@@ -26,11 +25,17 @@ class WeeklyAssessment extends Model<InferAttributes<WeeklyAssessment>, InferCre
 }
 
 WeeklyAssessment.init({
-    id: DataTypes.INTEGER,
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
-    date: DataTypes.DATE,
-    userId: DataTypes.INTEGER,
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
 
     thisWeekIWeighed: DataTypes.INTEGER,
     planningSelfRatingThisWeek: DataTypes.INTEGER,
