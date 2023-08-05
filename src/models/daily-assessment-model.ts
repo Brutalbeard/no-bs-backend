@@ -26,8 +26,8 @@ DailyAssessment.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: DataTypes.NOW,
-    updatedAt: DataTypes.NOW,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
     date: {
         type: DataTypes.DATE,
         allowNull: false,

@@ -3,6 +3,7 @@ import * as path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import sequelize from './utils/sequelize';
+require('dotenv').config();
 
 import indexRouter from './routes/index';
 import deepDiveRouter from './routes/deep-dive-router';
