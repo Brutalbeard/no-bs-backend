@@ -1,9 +1,9 @@
 import * as express from 'express';
 const router = express.Router();
 
-/* GET home page. */
+/* GET base route. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.send(200);
 });
 
 export default router;
