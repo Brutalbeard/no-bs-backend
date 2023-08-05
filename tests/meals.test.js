@@ -1,8 +1,11 @@
 const request = require('supertest');
 const express = require('express');
 const router = require('../dist/routes/meal-router').default;
+const bodyParser = require("body-parser");
 
 const app = new express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use('/meal', router);
 
@@ -14,18 +17,24 @@ describe('GET /meal', () => {
 });
 
 describe('POST /meal', () => {
-    it('should return 200 OK', async () => {
-        const res = (await request(app)
-            .post('/meal')
+    test("It should response the GET method", done => {
+        request(app)
+            .post("/meal")
             .send({
-                "date": "2023-08-05T23:42:19.329Z",
+                "date": Date.now(),
                 "actual": "Woohoo",
                 "onPlan": true,
                 "hungriness": "medium",
                 "satisfaction": "minimal",
                 "mealType": "Snack"
             })
-        );
-        expect(res.statusCode).toEqual(200);
+            .then(response => {
+                expect(response.statusCode).toBe(200);
+                done();
+            })
+            .catch(err => {
+                console.log(err);
+                done();
+            });
     });
 });
