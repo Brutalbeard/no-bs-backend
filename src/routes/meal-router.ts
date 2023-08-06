@@ -2,9 +2,19 @@ import * as express from 'express';
 import Meal from '../models/meal-model';
 const router = express.Router();
 
-/* GET deep dives listings. */
-router.get('/', function (req, res, next) {
-  res.send('you\'ve reached the deep dive route  ');
+/* GET meal listings. */
+router.get('/', async function (req, res, next) {
+  let records = await Meal.findAll({
+    limit: 50 | Number(req.query.limit)
+  });
+  res.status(200).send(records);
+});
+
+
+/* GET meal by id. */
+router.get('/:id', async function (req, res, next) {
+  let records = await Meal.findByPk(req.params.id);
+  res.status(200).send(records);
 });
 
 // a route that posts data to the server

@@ -18,6 +18,25 @@ describe('GET /meal', () => {
                 done();
             });
     });
+    test("It should respond with an array", done => {
+        request(app)
+            .get("/meal")
+            .then(response => {
+                expect(Array.isArray(response.body)).toBe(true);
+                done();
+            });
+    })
+});
+
+describe('GET /meal by id', () => {
+    test("It should response the GET method", done => {
+        request(app)
+            .get("/meal/1")
+            .then(response => {
+                expect(response.statusCode).toBe(200);
+                done();
+            });
+    });
 });
 
 describe('POST /meal', () => {
