@@ -11,10 +11,10 @@ router.get('/', function (req, res, next) {
 router.post('/', async function (req, res, next) {
   let meal = new Meal(req.body)
 
-  meal.validate()
-    .catch((err) => {
-      res.status(400).send(err)
-    })
+  await meal.validate()
+  // .catch((err) => {
+  //   res.status(400).send(err)
+  // })
 
   meal.save()
     .then((meal) => {
