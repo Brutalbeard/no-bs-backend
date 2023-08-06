@@ -12,12 +12,16 @@ import dailyPlanRouter from './routes/daily-plan-router';
 
 const app = express();
 
-sequelize.authenticate().then(() => {
-    console.log('Connection has been established successfully.');
-    sequelize.sync({ force: true });
-}).catch((err: any) => {
-    console.error('Unable to connect to the database:', err);
-});
+sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+        sequelize
+            .sync()
+            .catch((err: any) => console.error(err));
+    }).catch((err: any) => {
+        console.error('Unable to connect to the database:', err);
+    });
 
 app.use(logger('dev'));
 app.use(express.json());

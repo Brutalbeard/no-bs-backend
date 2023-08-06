@@ -11,11 +11,11 @@ require('dotenv').config();
 //     database: process.env.PG_DATABASE_NAME
 // }) 
 
-// const sequelize = new Sequelize({
-//     dialect: 'sqlite',
-//     storage: './database.sqlite'
-// }) 
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: './database.sqlite'
+}) 
 
-const sequelize = new Sequelize('sqlite::memory:');
+// const sequelize = new Sequelize('sqlite::memory:');
 
 export default sequelize;
