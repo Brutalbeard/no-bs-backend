@@ -1,5 +1,6 @@
 import * as express from 'express';
 import Meal from '../models/meal-model';
+
 const router = express.Router();
 
 /* GET meal listings. */
@@ -11,6 +12,7 @@ router.get('/', async function (req, res, next) {
   res
     .status(200)
     .send(records);
+  next();
 });
 
 
@@ -23,10 +25,12 @@ router.get('/:id', async function (req, res, next) {
         res
           .status(200)
           .send(meal);
+        next();
       } else {
         res
           .status(404)
           .send('Not found');
+        next();
       }
     });
 });
@@ -50,11 +54,13 @@ router.post('/', async function (req, res, next) {
       res
         .status(200)
         .send(meal);
+      next();
     })
     .catch((err) => {
       res
         .status(400)
         .send({ message: err.message });
+      next();
     })
 });
 
@@ -70,20 +76,22 @@ router.put('/:id', async function (req, res, next) {
             res
               .status(200)
               .send(meal);
+            next();
           })
           .catch((err) => {
             res
               .status(400)
               .send({ message: err.message });
+            next();
           })
       } else {
         res
           .status(404)
           .send('Not found');
+        next();
       }
     });
 });
-
 
 // a route that deletes data on the server
 router.delete('/:id', async function (req, res, next) {
@@ -97,17 +105,21 @@ router.delete('/:id', async function (req, res, next) {
             res
               .status(201)
               .send('Deleted');
+            next();
           })
           .catch((err) => {
             res
               .status(400)
               .send({ message: err.message });
+            next();
           })
       } else {
         res
           .status(404)
           .send('Not found');
+        next();
       }
     });
 });
+
 export default router;
