@@ -1,9 +1,5 @@
 import {
-    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
-    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
-    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
-    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
-    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+    DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
 import sequelize from '../utils/sequelize';
 import WeeklyPlan from './weekly-plan-model';

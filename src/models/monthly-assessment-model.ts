@@ -1,9 +1,5 @@
 import {
-    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
-    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
-    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
-    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
-    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+    DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
 import sequelize from '../utils/sequelize';
 
@@ -51,7 +47,7 @@ class MonthlyAssessment extends Model<InferAttributes<MonthlyAssessment>, InferC
     declare didIWorkOnWhatISaidIWouldNotes: string;
     declare changesNoticed: string;
     declare workOnNextMonth: string;
-} 
+}
 
 MonthlyAssessment.init({
     id: {
@@ -103,7 +99,7 @@ MonthlyAssessment.init({
     didIWorkOnWhatISaidIWouldNotes: DataTypes.STRING,
     changesNoticed: DataTypes.STRING,
     workOnNextMonth: DataTypes.STRING,
-},{
+}, {
     sequelize,
     modelName: 'MonthlyAssessment',
 });

@@ -1,10 +1,7 @@
-import { 
-    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
-    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
-    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
-    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
-    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
-   } from 'sequelize';
+import {
+    DataTypes, HasManyAddAssociationMixin, HasManyGetAssociationsMixin,
+    HasManySetAssociationsMixin, Model, InferAttributes, InferCreationAttributes, CreationOptional,
+} from 'sequelize';
 import sequelize from '../utils/sequelize';
 
 import DailyPlan from './daily-plan-model';

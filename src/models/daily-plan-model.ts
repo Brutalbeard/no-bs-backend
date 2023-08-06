@@ -1,9 +1,6 @@
 import {
-    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
-    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
-    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
-    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
-    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+    DataTypes, HasManyAddAssociationMixin, HasManyGetAssociationsMixin,
+    HasManySetAssociationsMixin, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
 import sequelize from '../utils/sequelize';
 
@@ -28,7 +25,7 @@ class DailyPlan extends Model<InferAttributes<DailyPlan>, InferCreationAttribute
     declare getMeals: HasManyGetAssociationsMixin<Meal>;
     declare setMeal: HasManySetAssociationsMixin<Meal, number>;
     declare addMeal: HasManyAddAssociationMixin<Meal, number>;
- }
+}
 
 DailyPlan.init({
     id: {
