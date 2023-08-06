@@ -10,9 +10,13 @@ app.use(bodyParser.json());
 app.use('/meal', router);
 
 describe('GET /meal', () => {
-    it('should return 200 OK', async () => {
-        const res = await request(app).get('/meal');
-        expect(res.statusCode).toEqual(200);
+    test("It should response the GET method", done => {
+        request(app)
+            .get("/meal")
+            .then(response => {
+                expect(response.statusCode).toBe(200);
+                done();
+            });
     });
 });
 

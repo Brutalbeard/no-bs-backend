@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
 router.post('/', async function (req, res, next) {
   let meal = new Meal(req.body)
 
-  await meal.validate()
+  // await meal.validate()
   // .catch((err) => {
   //   res.status(400).send(err)
   // })
