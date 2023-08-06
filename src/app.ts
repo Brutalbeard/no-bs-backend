@@ -1,7 +1,7 @@
 import express from 'express';
-import * as path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import requestIdHeader from './utils/request-id';
 import sequelize from './utils/sequelize';
 require('dotenv').config();
 
@@ -23,6 +23,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(requestIdHeader);
 
 const apiPath = '/api/v1';
 
