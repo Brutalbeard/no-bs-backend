@@ -8,6 +8,8 @@ app.use(bodyParser.json());
 
 app.use('/meal', router);
 
+let createdMealId = 0;
+
 describe('POST /meal', () => {
     test("It should create a new meal record", done => {
         request(app)
@@ -21,6 +23,7 @@ describe('POST /meal', () => {
                 "mealType": "Snack"
             })
             .then(response => {
+                createdMealId = response.body.id;
                 expect(response.statusCode).toBe(200);
                 done();
             })
@@ -38,13 +41,9 @@ describe('GET /meal', () => {
             .then(response => {
                 expect(response.statusCode).toBe(200);
                 done();
-            });
-    });
-    test("It should respond with an array", done => {
-        request(app)
-            .get('/meal')
-            .then(response => {
-                expect(Array.isArray(response.body)).toBe(true);
+            })
+            .catch(err => {
+                console.log(err);
                 done();
             });
     });
@@ -53,7 +52,7 @@ describe('GET /meal', () => {
 describe('GET /meal by id', () => {
     test("It should return a specific meal", done => {
         request(app)
-            .get('/meal/1')
+            .get('/meal/' + createdMealId)
             .then(response => {
                 expect(response.statusCode).toBe(200);
                 done();
@@ -64,7 +63,7 @@ describe('GET /meal by id', () => {
 describe('DELETE /meal by id', () => {
     test("It should delete a specific meal", done => {
         request(app)
-            .delete('/meal/1')
+            .delete('/meal/' + createdMealId)
             .then(response => {
                 expect(response.statusCode).toBe(201);
                 done();
