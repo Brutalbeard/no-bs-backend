@@ -14,8 +14,22 @@ require('dotenv').config();
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: './database.sqlite'
-}) 
+})
 
 // const sequelize = new Sequelize('sqlite::memory:');
 
-export default sequelize;
+async function setupDatabase() {
+    await sequelize
+        .authenticate()
+        .then(() => {
+            console.log('Connection has been established successfully.');
+        }).catch((err: any) => {
+            console.error('Unable to connect to the database:', err);
+        });
+
+    await sequelize
+        .sync()
+        .catch((err: any) => console.error(err));
+}
+
+export { sequelize, setupDatabase };

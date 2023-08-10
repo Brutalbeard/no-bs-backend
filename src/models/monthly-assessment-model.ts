@@ -1,7 +1,7 @@
 import {
     DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
-import sequelize from '../utils/sequelize';
+import {sequelize} from '../utils/sequelize';
 
 
 class MonthlyAssessment extends Model<InferAttributes<MonthlyAssessment>, InferCreationAttributes<MonthlyAssessment>> {

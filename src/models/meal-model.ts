@@ -2,7 +2,7 @@ import {
     DataTypes, HasManyAddAssociationMixin, HasManyGetAssociationsMixin,
     HasManySetAssociationsMixin, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
-import sequelize from '../utils/sequelize';
+import { sequelize } from '../utils/sequelize';
 
 import DailyPlan from './daily-plan-model';
 
@@ -46,8 +46,5 @@ Meal.init({
     sequelize,
     modelName: 'Meal',
 });
-
-DailyPlan.hasMany(Meal);
-Meal.belongsTo(DailyPlan);
 
 export default Meal; 

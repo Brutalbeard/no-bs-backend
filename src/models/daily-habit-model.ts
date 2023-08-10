@@ -1,7 +1,7 @@
 import {
     DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
-import sequelize from '../utils/sequelize';
+import {sequelize} from '../utils/sequelize';
 
 class DailyHabit extends Model<InferAttributes<DailyHabit>, InferCreationAttributes<DailyHabit>> {
     declare id: CreationOptional<number>;
