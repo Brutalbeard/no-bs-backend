@@ -16,17 +16,26 @@ import dailyPlanRouter from './routes/daily-plan-router';
 
 const app = express();
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(requestIdHeader);
+app.init = async () => {
+    await setupDatabase();
+    await createDatabaseAssociations();
 
-const apiPath = '/api/v1';
+    app.use(logger('dev'));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
+    app.use(cookieParser());
+    app.use(requestIdHeader);
 
-app.use(apiPath + '/', indexRouter);
-app.use(apiPath + '/deep-dive', deepDiveRouter);
-app.use(apiPath + '/meal', mealRouter);
-app.use(apiPath + '/daily-plan', dailyPlanRouter);
+    const apiPath = '/api/v1';
+
+    app.use(apiPath + '/', indexRouter);
+    app.use(apiPath + '/deep-dive', deepDiveRouter);
+    app.use(apiPath + '/meal', mealRouter);
+    app.use(apiPath + '/daily-plan', dailyPlanRouter);
+
+    return app;
+}
+
+
 
 export default app;

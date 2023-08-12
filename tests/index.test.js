@@ -10,4 +10,4 @@ describe('GET /', () => {
         const res = await request(app).get('/');
         expect(res.statusCode).toEqual(200);
     });
-});
+})

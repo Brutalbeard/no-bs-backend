@@ -2,6 +2,7 @@ const request = require('supertest');
 const router = require('../dist/routes/meal-router').default;
 const bodyParser = require('body-parser');
 const app = require('../dist/app').default;
+require('../dist/utils/db-setup').default;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -25,6 +26,8 @@ describe('POST /meal', () => {
             .then(response => {
                 createdMealId = response.body.id;
                 expect(response.statusCode).toBe(200);
+            })
+            .then(() => {
                 done();
             })
             .catch(err => {
@@ -40,6 +43,8 @@ describe('GET /meal', () => {
             .get('/meal')
             .then(response => {
                 expect(response.statusCode).toBe(200);
+            })
+            .then(() => {
                 done();
             })
             .catch(err => {
@@ -55,6 +60,8 @@ describe('GET /meal by id', () => {
             .get('/meal/' + createdMealId)
             .then(response => {
                 expect(response.statusCode).toBe(200);
+            })
+            .then(() => {
                 done();
             });
     });
@@ -66,6 +73,8 @@ describe('DELETE /meal by id', () => {
             .delete('/meal/' + createdMealId)
             .then(response => {
                 expect(response.statusCode).toBe(201);
+            })
+            .then(() => {
                 done();
             });
     });

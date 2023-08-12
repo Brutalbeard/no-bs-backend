@@ -4,8 +4,8 @@ import Meal from '../models/meal-model';
 const router = express.Router();
 
 /* GET meal listings. */
-router.get('/', async function (req, res, next) {
-  let records = await Meal.findAll({
+router.get('/', function (req, res, next) {
+  let records = Meal.findAll({
     limit: Number(req.query.limit) ? Number(req.query.limit) : Number(process.env.MEAL_DEFAULT_PAGE_SIZE),
     offset: Number(req.query.offset) ? Number(req.query.offset) : 0
   });
@@ -17,8 +17,8 @@ router.get('/', async function (req, res, next) {
 
 
 /* GET meal by id. */
-router.get('/:id', async function (req, res, next) {
-  await Meal
+router.get('/:id', function (req, res, next) {
+  Meal
     .findByPk(req.params.id)
     .then((meal) => {
       if (meal) {
@@ -36,10 +36,10 @@ router.get('/:id', async function (req, res, next) {
 });
 
 // a route that posts data to the server
-router.post('/', async function (req, res, next) {
+router.post('/', function (req, res, next) {
   let meal = new Meal(req.body);
 
-  await meal
+  meal
     .validate()
     .catch((err) => {
       res
@@ -65,8 +65,8 @@ router.post('/', async function (req, res, next) {
 });
 
 // a route that updates data on the server
-router.put('/:id', async function (req, res, next) {
-  await Meal
+router.put('/:id', function (req, res, next) {
+  Meal
     .findByPk(req.params.id)
     .then((meal) => {
       if (meal) {
@@ -94,8 +94,8 @@ router.put('/:id', async function (req, res, next) {
 });
 
 // a route that deletes data on the server
-router.delete('/:id', async function (req, res, next) {
-  await Meal
+router.delete('/:id', function (req, res, next) {
+  Meal
     .findByPk(req.params.id)
     .then((meal) => {
       if (meal) {
