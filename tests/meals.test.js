@@ -67,6 +67,30 @@ describe('GET /meal', () => {
                 done();
             });
     });
+    test("It should respond with an array", done => {
+        request(app)
+            .get('/meal?limit=3')
+            .then(response => {
+                expect(response.body.length).toBe(3);
+                done();
+            })
+            .catch(err => {
+                console.log(err);
+                done();
+            });
+    });
+    test("It should respond with an array", done => {
+        request(app)
+            .get('/meal?limit=1&offset=1')
+            .then(response => {
+                expect(response.body.length).toBe(1);
+                done();
+            })
+            .catch(err => {
+                console.log(err);
+                done();
+            });
+    });
 });
 
 describe('GET /meal by id', () => {
