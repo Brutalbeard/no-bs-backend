@@ -1,11 +1,7 @@
 import {
-    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
-    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
-    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
-    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
-    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+    DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional
 } from 'sequelize';
-import sequelize from '../utils/sequelize';
+import {sequelize} from '../utils/sequelize';
 
 class DailyAssessment extends Model<InferAttributes<DailyAssessment>, InferCreationAttributes<DailyAssessment>> {
     declare id: CreationOptional<number>;
@@ -18,7 +14,7 @@ class DailyAssessment extends Model<InferAttributes<DailyAssessment>, InferCreat
     declare betterTomorrow: string | null;
     declare thankMyself: string | null;
     declare otherThoughts: string | null;
- }
+}
 
 DailyAssessment.init({
     id: {

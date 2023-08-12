@@ -1,11 +1,7 @@
 import {
-    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
-    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
-    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
-    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
-    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+    DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
-import sequelize from '../utils/sequelize';
+import {sequelize} from '../utils/sequelize';
 
 class WeeklyAssessment extends Model<InferAttributes<WeeklyAssessment>, InferCreationAttributes<WeeklyAssessment>> {
     declare id: CreationOptional<number>;
