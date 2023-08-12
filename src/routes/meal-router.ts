@@ -47,8 +47,6 @@ router.get('/:id', function (req, res, next) {
 router.post('/', async function (req, res, next) {
   let meal = new Meal(req.body);
 
-  console.log(meal)
-
   await meal
     .save()
     .then((meal) => {
@@ -103,8 +101,6 @@ router.delete('/:id', async function (req, res, next) {
         .status(404)
         .send({ message: err.message });
     });
-
-  console.log(meal);
 
   if (meal) {
     meal

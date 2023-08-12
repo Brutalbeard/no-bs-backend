@@ -2,7 +2,6 @@ const request = require('supertest');
 const router = require('../dist/routes/meal-router').default;
 const bodyParser = require('body-parser');
 const app = require('../dist/app').default;
-require('../dist/utils/db-setup').default;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -29,7 +28,7 @@ describe('POST /meal', () => {
                 done();
             })
             .catch(err => {
-                console.log(err);
+                console.error(err);
                 done();
             });
     });
@@ -49,7 +48,7 @@ describe('POST /meal', () => {
                 done();
             })
             .catch(err => {
-                console.log(err);
+                console.error(err);
                 done();
             });
     });
@@ -66,7 +65,7 @@ describe('GET /meal', () => {
                 done();
             })
             .catch(err => {
-                console.log(err);
+                console.error(err);
                 done();
             });
     });
@@ -78,7 +77,7 @@ describe('GET /meal', () => {
                 done();
             })
             .catch(err => {
-                console.log(err);
+                console.error(err);
                 done();
             });
     });
@@ -90,7 +89,7 @@ describe('GET /meal', () => {
                 done();
             })
             .catch(err => {
-                console.log(err);
+                console.error(err);
                 done();
             });
     });
