@@ -1,12 +1,8 @@
 import {
-    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
-    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
-    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
-    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
-    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
+    DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
 import WeeklyAssessment from './weekly-assessment-model';
-import sequelize from '../utils/sequelize';
+import {sequelize} from '../utils/sequelize';
 
 class WeeklyPlan extends Model<InferAttributes<WeeklyPlan>, InferCreationAttributes<WeeklyPlan>> {
     declare id: CreationOptional<number>;
@@ -40,8 +36,5 @@ WeeklyPlan.init({
     sequelize,
     modelName: 'WeeklyPlan',
 });
-
-WeeklyPlan.hasOne(WeeklyAssessment);
-WeeklyAssessment.belongsTo(WeeklyPlan);
 
 export default WeeklyPlan;

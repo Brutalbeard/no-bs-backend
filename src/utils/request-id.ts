@@ -8,7 +8,8 @@ const requestIdHeader = function (req, res, next) {
         headers: req.headers,
         body: req.body,
         query: req.query,
-        params: req.params
+        params: req.params,
+        method: req.method,
     });
     next();
 }

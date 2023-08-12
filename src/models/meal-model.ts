@@ -1,11 +1,8 @@
-import { 
-    Association, DataTypes, HasManyAddAssociationMixin, HasManyCountAssociationsMixin,
-    HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin,
-    HasManySetAssociationsMixin, HasManyAddAssociationsMixin, HasManyHasAssociationsMixin,
-    HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, Model, ModelDefined, Optional,
-    Sequelize, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, ForeignKey,
-   } from 'sequelize';
-import sequelize from '../utils/sequelize';
+import {
+    DataTypes, HasManyAddAssociationMixin, HasManyGetAssociationsMixin,
+    HasManySetAssociationsMixin, Model, InferAttributes, InferCreationAttributes, CreationOptional,
+} from 'sequelize';
+import { sequelize } from '../utils/sequelize';
 
 import DailyPlan from './daily-plan-model';
 
@@ -44,13 +41,13 @@ Meal.init({
     mealType: {
         type: DataTypes.ENUM('Breakfast', 'Lunch', 'Dinner', 'Other', 'Snack'),
         allowNull: false,
+        validate: {
+            isIn: [['Breakfast', 'Lunch', 'Dinner', 'Other', 'Snack']],
+        },
     },
 }, {
     sequelize,
     modelName: 'Meal',
 });
-
-DailyPlan.hasMany(Meal);
-Meal.belongsTo(DailyPlan);
 
 export default Meal; 
