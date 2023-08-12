@@ -12,13 +12,13 @@ require('dotenv').config();
 //     logging: false
 // }) 
 
-// const sequelize = new Sequelize({
-//     dialect: 'sqlite',
-//     storage: './database.sqlite',
-//     logging: false
-// })
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: './database.sqlite',
+    logging: false
+})
 
-const sequelize = new Sequelize('sqlite::memory:');
+// const sequelize = new Sequelize('sqlite::memory:');
 
 async function setupDatabase() {
 

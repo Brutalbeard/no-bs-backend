@@ -26,8 +26,6 @@ describe('POST /meal', () => {
             .then(response => {
                 createdMealId = response.body.id;
                 expect(response.statusCode).toBe(200);
-            })
-            .then(() => {
                 done();
             })
             .catch(err => {
@@ -44,7 +42,7 @@ describe('POST /meal', () => {
                 "onPlan": true,
                 "hungriness": "medium",
                 "satisfaction": "minimal",
-                "mealType": "Snack"
+                "mealType": "JUNKFOOD"
             })
             .then(response => {
                 expect(response.statusCode).toBe(400);
@@ -74,9 +72,9 @@ describe('GET /meal', () => {
     });
     test("It should respond with an array", done => {
         request(app)
-            .get('/meal?limit=3')
+            .get('/meal?limit=2')
             .then(response => {
-                expect(response.body.length).toBe(3);
+                expect(response.body.length).toBe(2);
                 done();
             })
             .catch(err => {
@@ -84,11 +82,11 @@ describe('GET /meal', () => {
                 done();
             });
     });
-    test("It should respond with an array", done => {
+    test("It should respond with an error", done => {
         request(app)
-            .get('/meal?limit=1&offset=1')
+            .get('/meal?limit=BEANS')
             .then(response => {
-                expect(response.body.length).toBe(1);
+                expect(response.body.length).toBeError();
                 done();
             })
             .catch(err => {
@@ -176,14 +174,12 @@ describe('DELETE /meal by id', () => {
             .delete('/meal/' + createdMealId)
             .then(response => {
                 expect(response.statusCode).toBe(201);
-            })
-            .then(() => {
                 done();
             });
     });
     test("It should fail to delete a specific meal", done => {
         request(app)
-            .delete('/meal/' + 80000)
+            .delete('/meal/stupid-face')
             .then(response => {
                 expect(response.statusCode).toBe(404);
                 done();
