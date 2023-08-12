@@ -41,6 +41,9 @@ Meal.init({
     mealType: {
         type: DataTypes.ENUM('Breakfast', 'Lunch', 'Dinner', 'Other', 'Snack'),
         allowNull: false,
+        validate: {
+            isIn: [['Breakfast', 'Lunch', 'Dinner', 'Other', 'Snack']],
+        },
     },
 }, {
     sequelize,

@@ -35,6 +35,26 @@ describe('POST /meal', () => {
                 done();
             });
     });
+    test("It should fail to create a new meal record", done => {
+        request(app)
+            .post('/meal')
+            .send({
+                "date": new Date(),
+                "actual": "Woohoo",
+                "onPlan": true,
+                "hungriness": "medium",
+                "satisfaction": "minimal",
+                "mealType": "Snack"
+            })
+            .then(response => {
+                expect(response.statusCode).toBe(400);
+                done();
+            })
+            .catch(err => {
+                console.log(err);
+                done();
+            });
+    });
 });
 
 describe('GET /meal', () => {
@@ -45,6 +65,30 @@ describe('GET /meal', () => {
                 expect(response.statusCode).toBe(200);
             })
             .then(() => {
+                done();
+            })
+            .catch(err => {
+                console.log(err);
+                done();
+            });
+    });
+    test("It should respond with an array", done => {
+        request(app)
+            .get('/meal?limit=3')
+            .then(response => {
+                expect(response.body.length).toBe(3);
+                done();
+            })
+            .catch(err => {
+                console.log(err);
+                done();
+            });
+    });
+    test("It should respond with an array", done => {
+        request(app)
+            .get('/meal?limit=1&offset=1')
+            .then(response => {
+                expect(response.body.length).toBe(1);
                 done();
             })
             .catch(err => {
@@ -65,6 +109,65 @@ describe('GET /meal by id', () => {
                 done();
             });
     });
+    test("It should fail to return a specific meal", done => {
+        request(app)
+            .get('/meal/' + 80000)
+            .then(response => {
+                expect(response.statusCode).toBe(404);
+                done();
+            });
+    });
+});
+
+describe('PUT /meal by id', () => {
+    test("It should update a specific meal", done => {
+        request(app)
+            .put('/meal/' + createdMealId)
+            .send({
+                "date": new Date(),
+                "actual": "Woohoo",
+                "onPlan": false,
+                "hungriness": "medium",
+                "satisfaction": "minimal",
+                "mealType": "Snack"
+            })
+            .then(response => {
+                expect(response.statusCode).toBe(200);
+                done();
+            });
+    });
+    test("It should fail to update a specific meal", done => {
+        request(app)
+            .put('/meal/' + createdMealId)
+            .send({
+                "date": new Date(),
+                "actual": "Woohoo",
+                "onPlan": false,
+                "hungriness": "medium",
+                "satisfaction": "minimal",
+                "mealType": "POOP"
+            })
+            .then(response => {
+                expect(response.statusCode).toBe(400);
+                done();
+            });
+        });
+    test("It should fail to update a specific meal", done => {
+        request(app)
+            .put('/meal/' + 80000)
+            .send({
+                "date": new Date(),
+                "actual": "Woohoo",
+                "onPlan": false,
+                "hungriness": "medium",
+                "satisfaction": "minimal",
+                "mealType": "POOP"
+            })
+            .then(response => {
+                expect(response.statusCode).toBe(404);
+                done();
+            });
+        });
 });
 
 describe('DELETE /meal by id', () => {
@@ -78,4 +181,12 @@ describe('DELETE /meal by id', () => {
                 done();
             });
     });
+    test("It should fail to delete a specific meal", done => {
+        request(app)
+            .delete('/meal/' + 80000)
+            .then(response => {
+                expect(response.statusCode).toBe(404);
+                done();
+            });
+        });
 });
