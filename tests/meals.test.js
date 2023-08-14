@@ -60,12 +60,6 @@ describe('GET /meal', () => {
             .get('/meal')
             .then(response => {
                 expect(response.statusCode).toBe(200);
-            })
-            .then(() => {
-                done();
-            })
-            .catch(err => {
-                console.error(err);
                 done();
             });
     });
@@ -75,10 +69,6 @@ describe('GET /meal', () => {
             .then(response => {
                 expect(response.body.length).toBe(2);
                 done();
-            })
-            .catch(err => {
-                console.error(err);
-                done();
             });
     });
     test("It should respond with an error", done => {
@@ -86,10 +76,6 @@ describe('GET /meal', () => {
             .get('/meal?limit=BEANS')
             .then(response => {
                 expect(response.statusCode).toBe(404);
-                done();
-            })
-            .catch(err => {
-                console.error(err);
                 done();
             });
     });
@@ -101,8 +87,6 @@ describe('GET /meal by id', () => {
             .get('/meal/' + createdMealId)
             .then(response => {
                 expect(response.statusCode).toBe(200);
-            })
-            .then(() => {
                 done();
             });
     });
