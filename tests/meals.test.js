@@ -85,7 +85,7 @@ describe('GET /meal', () => {
         request(app)
             .get('/meal?limit=BEANS')
             .then(response => {
-                expect(response.body.length).toBeError();
+                expect(response.statusCode).toBe(404);
                 done();
             })
             .catch(err => {
