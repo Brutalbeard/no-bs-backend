@@ -10,6 +10,14 @@ const requestIdHeader = function (req, res, next) {
         query: req.query,
         params: req.params,
         method: req.method,
+        path: req.path,
+        url: req.url,
+        baseUrl: req.baseUrl,
+        originalUrl: req.originalUrl,
+        hostname: req.hostname,
+        ip: req.ip,
+        protocol: req.protocol,
+        secure: req.secure,
     });
     next();
 }
