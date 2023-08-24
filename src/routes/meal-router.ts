@@ -6,7 +6,7 @@ const router = express.Router();
 /* GET meal listings. */
 router.get('/', async function (req, res, next) {
   await Meal.findAll({
-    limit: req.query.limit ? Number(req.query.limit) : Number(process.env.MEAL_DEFAULT_PAGE_SIZE),
+    limit: req.query.limit ? Number(req.query.limit) : 50,
     offset: req.query.offset ? Number(req.query.offset) : 0
   })
     .then((meals) => {
@@ -18,7 +18,7 @@ router.get('/', async function (req, res, next) {
     .catch((err) => {
       res
         .status(404)
-        .send({ message: 'Not found' });
+        .send({ message: err.message});
       next();
     });
 });
@@ -47,7 +47,7 @@ router.get('/:id', function (req, res, next) {
 router.post('/', async function (req, res, next) {
   let meal = new Meal(req.body);
 
-  await meal
+  meal
     .save()
     .then((meal) => {
       res
@@ -94,32 +94,30 @@ router.put('/:id', function (req, res, next) {
 
 // a route that deletes data on the server
 router.delete('/:id', async function (req, res, next) {
-  let meal = await Meal
+  await Meal
     .findByPk(req.params.id)
+    .then((meal) => {
+      meal
+        .destroy()
+        .then((meal) => {
+          res
+            .status(201)
+            .send({message: 'Deleted'});
+          next();
+        })
+        .catch((err) => {
+          res
+            .status(400)
+            .send({ message: err.message });
+          next();
+        })
+    })
     .catch((err) => {
       res
         .status(404)
         .send({ message: err.message });
+      next();
     });
-
-  if (meal) {
-    meal
-      .destroy()
-      .then((meal) => {
-        res
-          .status(201)
-          .send('Deleted');
-      })
-      .catch((err) => {
-        res
-          .status(404)
-          .send({ message: err.message });
-      })
-  } else {
-    res
-      .status(404)
-      .send({ message: 'Not found' });
-  }
 });
 
 export default router;
