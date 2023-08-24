@@ -1,19 +1,18 @@
 const request = require('supertest');
-const router = require('../dist/routes/meal-router').default;
 const bodyParser = require('body-parser');
+const router = require('../dist/routes/meal-router').default;
 const app = require('../dist/app').default;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.use('/meal', router);
+app.use('/', router);
 
 let createdMealId = 0;
 
-describe('POST /meal', () => {
+describe('POST /', () => {
     test("It should create a new meal record", done => {
         request(app)
-            .post('/meal')
+            .post('/')
             .send({
                 "date": new Date(),
                 "actual": "Woohoo",
@@ -27,14 +26,10 @@ describe('POST /meal', () => {
                 expect(response.statusCode).toBe(200);
                 done();
             })
-            .catch(err => {
-                console.error(err);
-                done();
-            });
     });
     test("It should fail to create a new meal record", done => {
         request(app)
-            .post('/meal')
+            .post('/')
             .send({
                 "date": new Date(),
                 "actual": "Woohoo",
@@ -47,17 +42,13 @@ describe('POST /meal', () => {
                 expect(response.statusCode).toBe(400);
                 done();
             })
-            .catch(err => {
-                console.error(err);
-                done();
-            });
     });
 });
 
 describe('GET /meal', () => {
     test("It should respond with a 200", done => {
         request(app)
-            .get('/meal')
+            .get('/')
             .then(response => {
                 expect(response.statusCode).toBe(200);
                 done();
@@ -65,7 +56,7 @@ describe('GET /meal', () => {
     });
     test("It should respond with an array", done => {
         request(app)
-            .get('/meal?limit=2')
+            .get('/?limit=2')
             .then(response => {
                 expect(response.body.length).toBe(2);
                 done();
@@ -73,7 +64,7 @@ describe('GET /meal', () => {
     });
     test("It should respond with an error", done => {
         request(app)
-            .get('/meal?limit=BEANS')
+            .get('/?limit=BEANS')
             .then(response => {
                 expect(response.statusCode).toBe(404);
                 done();
@@ -84,7 +75,7 @@ describe('GET /meal', () => {
 describe('GET /meal by id', () => {
     test("It should return a specific meal", done => {
         request(app)
-            .get('/meal/' + createdMealId)
+            .get('/' + createdMealId)
             .then(response => {
                 expect(response.statusCode).toBe(200);
                 done();
@@ -92,7 +83,7 @@ describe('GET /meal by id', () => {
     });
     test("It should fail to return a specific meal", done => {
         request(app)
-            .get('/meal/' + 80000)
+            .get('/' + 80000)
             .then(response => {
                 expect(response.statusCode).toBe(404);
                 done();
@@ -103,7 +94,7 @@ describe('GET /meal by id', () => {
 describe('PUT /meal by id', () => {
     test("It should update a specific meal", done => {
         request(app)
-            .put('/meal/' + createdMealId)
+            .put('/' + createdMealId)
             .send({
                 "date": new Date(),
                 "actual": "Woohoo",
@@ -119,7 +110,7 @@ describe('PUT /meal by id', () => {
     });
     test("It should fail to update a specific meal", done => {
         request(app)
-            .put('/meal/' + createdMealId)
+            .put('/' + createdMealId)
             .send({
                 "date": new Date(),
                 "actual": "Woohoo",
@@ -135,7 +126,7 @@ describe('PUT /meal by id', () => {
         });
     test("It should fail to update a specific meal", done => {
         request(app)
-            .put('/meal/' + 80000)
+            .put('/' + 80000)
             .send({
                 "date": new Date(),
                 "actual": "Woohoo",
@@ -154,7 +145,7 @@ describe('PUT /meal by id', () => {
 describe('DELETE /meal by id', () => {
     test("It should delete a specific meal", done => {
         request(app)
-            .delete('/meal/' + createdMealId)
+            .delete('/' + createdMealId)
             .then(response => {
                 expect(response.statusCode).toBe(201);
                 done();
@@ -162,7 +153,7 @@ describe('DELETE /meal by id', () => {
     });
     test("It should fail to delete a specific meal", done => {
         request(app)
-            .delete('/meal/stupid-face')
+            .delete('/stupid-face')
             .then(response => {
                 expect(response.statusCode).toBe(404);
                 done();

@@ -6,7 +6,7 @@ const router = express.Router();
 /* GET meal listings. */
 router.get('/', async function (req, res, next) {
   await Meal.findAll({
-    limit: req.query.limit ? Number(req.query.limit) : Number(process.env.MEAL_DEFAULT_PAGE_SIZE),
+    limit: req.query.limit ? Number(req.query.limit) : 50,
     offset: req.query.offset ? Number(req.query.offset) : 0
   })
     .then((meals) => {
