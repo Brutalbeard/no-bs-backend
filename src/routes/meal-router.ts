@@ -4,18 +4,18 @@ import Meal from '../models/meal-model';
 const router = express.Router();
 
 /* GET meal listings. */
-router.get('/', async function (req, res, next) {
-  await Meal.findAll({
+router.get('/', function (req, res, next) {
+  Meal.findAll({
     limit: req.query.limit ? Number(req.query.limit) : 50,
     offset: req.query.offset ? Number(req.query.offset) : 0
   })
-    .then((meals) => {
+    .then((meals: Meal[]) => {
       res
         .status(200)
         .send(meals);
       next();
     })
-    .catch((err) => {
+    .catch((err: Error) => {
       res
         .status(404)
         .send({ message: err.message});
@@ -44,7 +44,7 @@ router.get('/:id', function (req, res, next) {
 });
 
 // a route that posts data to the server
-router.post('/', async function (req, res, next) {
+router.post('/', function (req, res, next) {
   let meal = new Meal(req.body);
 
   meal
@@ -93,8 +93,8 @@ router.put('/:id', function (req, res, next) {
 });
 
 // a route that deletes data on the server
-router.delete('/:id', async function (req, res, next) {
-  await Meal
+router.delete('/:id', function (req, res, next) {
+  Meal
     .findByPk(req.params.id)
     .then((meal) => {
       meal
