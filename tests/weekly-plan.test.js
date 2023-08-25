@@ -19,9 +19,9 @@ describe('/POST Weekly Plan', () => {
                 goalsOutsideScale: "be awesome",
                 obstacles: "none",
             })
-            .expect(200)
             .then((response) => {
                 testId = response.body.id;
+                expect(response.statusCode).toBe(200);
                 done();
             });
         });
