@@ -33,6 +33,9 @@ Meal.init({
     date: {
         type: DataTypes.DATE,
         allowNull: false,
+        validate: {
+            isDate: true,
+        },
     },
     actual: DataTypes.STRING,
     onPlan: DataTypes.BOOLEAN,

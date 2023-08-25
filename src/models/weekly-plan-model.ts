@@ -27,6 +27,9 @@ WeeklyPlan.init({
     date: {
         type: DataTypes.DATE,
         allowNull: false,
+        validate: {
+            isDate: true,
+        },
     },
     poundsToLose: DataTypes.INTEGER,
     differentThisWeek: DataTypes.STRING,
