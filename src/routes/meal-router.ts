@@ -99,7 +99,7 @@ router.delete('/:id', function (req, res, next) {
     .then((meal) => {
       meal
         .destroy()
-        .then((meal) => {
+        .then(() => {
           res
             .status(201)
             .send({message: 'Deleted'});

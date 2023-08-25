@@ -153,3 +153,22 @@ describe('/PUT Daily Plan', () => {
             });
     });
 });
+
+describe('/DELETE Daily Plan', () => {
+    test('should return 200', done =>{
+        request(app)
+            .delete(`/${testId}`)
+            .then((response) => {
+                expect(response.statusCode).toEqual(201);
+                done();
+            });
+    });
+    test('should return 400', done =>{
+        request(app)
+            .delete(`/80000`)
+            .then((response) => {
+                expect(response.statusCode).toEqual(404);
+                done();
+            });
+    });
+});
