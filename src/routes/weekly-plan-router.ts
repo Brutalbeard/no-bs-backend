@@ -1,5 +1,6 @@
 import * as express from 'express';
 import WeeklyPlan from '../models/weekly-plan-model';
+import DailyPlan from '../models/daily-plan-model';
 
 const router = express.Router();
 
@@ -7,7 +8,8 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
   WeeklyPlan.findAll({
     limit: req.query.limit ? Number(req.query.limit) : 50,
-    offset: req.query.offset ? Number(req.query.offset) : 0
+    offset: req.query.offset ? Number(req.query.offset) : 0,
+    include: req.query.include ? req.query.include.split(',') : []
   })
     .then((plans: WeeklyPlan[]) => {
       res

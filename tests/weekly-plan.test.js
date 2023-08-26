@@ -66,6 +66,11 @@ describe('/GET Weekly Plan', () => {
             .get('/?limit=2')
             .expect(200, done);
     });
+    it('should return 200', (done) => {
+        request(app)
+            .get('/?include=WeeklyAssessment')
+            .expect(200, done);
+    });
 });
 
 describe('/PUT Weekly Plan', () => {
