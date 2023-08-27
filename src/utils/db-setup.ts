@@ -5,7 +5,7 @@ import DailyPlan from "../models/daily-plan-model";
 import MonthlyPlan from "../models/monthly-plan-model";
 import MonthlyAssessment from "../models/monthly-assessment-model";
 import WeeklyPlan from "../models/weekly-plan-model";
-import WeklyAssessment from "../models/weekly-assessment-model";
+import WeeklyAssessment from "../models/weekly-assessment-model";
 
 async function createDatabaseAssociations() {
     Meal.belongsTo(DailyPlan);
@@ -14,8 +14,8 @@ async function createDatabaseAssociations() {
     DailyAssessment.belongsTo(DailyPlan);
     WeeklyPlan.hasMany(DailyPlan);
     DailyPlan.belongsTo(WeeklyPlan);
-    WeeklyPlan.hasOne(WeklyAssessment);
-    WeklyAssessment.belongsTo(WeeklyPlan);
+    WeeklyPlan.hasOne(WeeklyAssessment);
+    WeeklyAssessment.belongsTo(WeeklyPlan);
     MonthlyPlan.hasMany(WeeklyPlan);
     WeeklyPlan.belongsTo(MonthlyPlan);
     MonthlyPlan.hasOne(MonthlyAssessment);

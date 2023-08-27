@@ -45,9 +45,7 @@ router.get('/:id', function (req, res, next) {
 
 // a route that posts data to the server
 router.post('/', function (req, res, next) {
-  let meal = new Meal(req.body);
-
-  meal
+  new Meal(req.body)
     .save()
     .then((meal) => {
       res

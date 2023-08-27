@@ -1,15 +1,17 @@
 import * as express from 'express';
-import DailyPlan from '../models/daily-plan-model';
+import WeeklyPlan from '../models/weekly-plan-model';
 
 const router = express.Router();
 
 /* GET deep dives listings. */
 router.get('/', function(req, res, next) {
-  DailyPlan.findAll({
+  WeeklyPlan.findAll({
     limit: req.query.limit ? Number(req.query.limit) : 50,
-    offset: req.query.offset ? Number(req.query.offset) : 0
+    offset: req.query.offset ? Number(req.query.offset) : 0,
+    //@ts-ignore
+    include: req.query.include ? req.query.include.split(',') : []
   })
-    .then((plans: DailyPlan[]) => {
+    .then((plans) => {
       res
         .status(200)
         .send(plans);
@@ -24,7 +26,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-  DailyPlan
+  WeeklyPlan
     .findByPk(req.params.id)
     .then((plan) => {
       if (plan) {
@@ -42,7 +44,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  new DailyPlan(req.body)
+  new WeeklyPlan(req.body)
     .save()
     .then((plan) => {
       res
@@ -59,7 +61,7 @@ router.post('/', function(req, res, next) {
 });
 
 router.put('/:id', function(req, res, next) {
-  DailyPlan
+  WeeklyPlan
     .findByPk(req.params.id)
     .then((plan) => {
       if (plan) {
@@ -87,7 +89,7 @@ router.put('/:id', function(req, res, next) {
 });
 
 router.delete('/:id', function(req, res, next) {
-  DailyPlan
+  WeeklyPlan
     .findByPk(req.params.id)
     .then((plan) => {
       plan.destroy()

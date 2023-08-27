@@ -70,6 +70,14 @@ describe('GET /meal', () => {
                 done();
             });
     });
+    test("It should work with an offset", done => {
+        request(app)
+            .get('/?offset=1')
+            .then(response => {
+                expect(response.statusCode).toBe(200);
+                done();
+            });
+    });
 });
 
 describe('GET /meal by id', () => {
