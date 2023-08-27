@@ -42,9 +42,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  let plan = new DailyPlan(req.body);
-
-  plan
+  new DailyPlan(req.body)
     .save()
     .then((plan) => {
       res
