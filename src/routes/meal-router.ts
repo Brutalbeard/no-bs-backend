@@ -1,121 +1,126 @@
-import * as express from 'express';
+import { Context, Next } from 'koa';
+import Router from '@koa/router';
 import Meal from '../models/meal-model';
 
-const router = express.Router();
+const router = new Router();
+
+router
+  .get('/api/v1/meal', listMeals)
+  .get('/api/v1/meal/:id', getById)
+  .post('/api/v1/meal', newMeal)
+  .put('/api/v1/meal/:id', updateMeal)
+  .delete('/api/v1/meal/:id', deleteById);
+
 
 /* GET meal listings. */
-router.get('/', function (req, res, next) {
-  Meal.findAll({
-    limit: req.query.limit ? Number(req.query.limit) : 50,
-    offset: req.query.offset ? Number(req.query.offset) : 0
+async function listMeals(ctx: Context, next: Next) {
+  await Meal.findAll({
+    limit: ctx.request.query.limit ? Number(ctx.request.query.limit) : 50,
+    offset: ctx.request.query.offset ? Number(ctx.request.query.offset) : 0,
+    //@ts-ignore
+    include: ctx.request.query.include ? ctx.request.query.include.split(',') : []
   })
-    .then((meals: Meal[]) => {
-      res
-        .status(200)
-        .send(meals);
-      next();
-    })
-    .catch((err: Error) => {
-      res
-        .status(404)
-        .send({ message: err.message});
-      next();
-    });
-});
-
-
-/* GET meal by id. */
-router.get('/:id', function (req, res, next) {
-  Meal
-    .findByPk(req.params.id)
-    .then((meal) => {
-      if (meal) {
-        res
-          .status(200)
-          .send(meal);
-        next();
-      } else {
-        res
-          .status(404)
-          .send({ message: 'Not found' });
-        next();
-      }
-    });
-});
-
-// a route that posts data to the server
-router.post('/', function (req, res, next) {
-  new Meal(req.body)
-    .save()
-    .then((meal) => {
-      res
-        .status(200)
-        .send(meal);
+    .then((meals) => {
+      ctx.response.status = 200;
+      ctx.response.body = meals;
       next();
     })
     .catch((err) => {
-      res
-        .status(400)
-        .send({ message: err.message });
+      ctx.response.status = 400;
+      ctx.response.body = { message: err.message };
       next();
     });
-});
+}
 
-// a route that updates data on the server
-router.put('/:id', function (req, res, next) {
-  Meal
-    .findByPk(req.params.id)
+/* GET meal by id. */
+async function getById(ctx: Context, next: Next) {
+  await Meal
+    .findByPk(ctx.params.id)
     .then((meal) => {
       if (meal) {
-        meal
-          .update(req.body)
+        ctx.response.status = 200;
+        ctx.response.body = meal;
+        next();
+      } else {
+        ctx.response.status = 404;
+        ctx.response.body = { message: 'Not found' };
+        next();
+      }
+    })
+    .catch((err) => {
+      ctx.response.status = 404;
+      ctx.response.body = { message: err.message };
+      next();
+    });
+}
+
+/* POST meal */
+async function newMeal(ctx: Context, next: Next) {
+  console.log("Made it to new meal with:", ctx.request.body)
+  await new Meal(ctx.request.body)
+    .save()
+    .then((meal) => {
+      console.log("Meal saved:", meal)
+      ctx.response.status = 200;
+      ctx.response.body = meal;
+      console.log("CTX: ", ctx)
+      next();
+    })
+    .catch((err) => {
+      ctx.response.status = 400;
+      ctx.response.body = { message: err.message };
+      next();
+    });
+}
+
+// a route that updates data on the server
+async function updateMeal(ctx: Context, next: Next) {
+  await Meal
+    .findByPk(ctx.params.id)
+    .then(async (meal) => {
+      if (meal) {
+        await meal
+          .update(ctx.request.body)
           .then((meal) => {
-            res
-              .status(200)
-              .send(meal);
+            ctx.response.status = 200;
             next();
           })
           .catch((err) => {
-            res
-              .status(400)
-              .send({ message: err.message });
+            ctx.response.status = 400;
+            ctx.response.body = { message: err.message };
             next();
           })
       } else {
-        res
-          .status(404)
-          .send({ message: 'Not found' });
+        ctx.response.status = 404;
+        ctx.response.body = { message: 'Not found' };
         next();
       }
     });
-});
+}
 
 // a route that deletes data on the server
-router.delete('/:id', function (req, res, next) {
-  Meal
-    .findByPk(req.params.id)
-    .then((meal) => {
-      meal
+async function deleteById(ctx: Context, next: Next) {
+  await Meal
+    .findByPk(ctx.params.id)
+    .then(async (meal) => {
+      await meal
         .destroy()
         .then(() => {
-          res
-            .status(201)
-            .send({message: 'Deleted'});
+          ctx.response.status = 201;
+          ctx.response.body = { message: 'Deleted' };
           next();
         })
         .catch((err) => {
-          res
-            .status(400)
-            .send({ message: err.message });
+          ctx.response.status = 400;
+          ctx.response.body = { message: err.message };
           next();
         })
     })
     .catch((err) => {
-      res
-        .status(404)
-        .send({ message: err.message });
+      ctx.response.status = 404;
+      ctx.response.body = { message: err.message };
       next();
     });
-});
+}
 
 export default router;

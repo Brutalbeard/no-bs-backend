@@ -1,18 +1,12 @@
 const request = require('supertest');
-const bodyParser = require('body-parser');
-const router = require('../dist/routes/weekly-plan-router').default;
 const app = require('../dist/app').default;
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use('/', router);
 
 let testId = 0;
 
 describe('/POST Weekly Plan', () => {
     it('should return 200', (done) => {
-        request(app)
-            .post('/')
+        request(app.callback())
+            .post('/api/v1/weekly-plan/')
             .send({
                 date: new Date(),
                 poundsToLose: 2,
@@ -26,8 +20,8 @@ describe('/POST Weekly Plan', () => {
             });
         });
     it('should return 400', (done) => {
-        request(app)
-            .post('/')
+        request(app.callback())
+            .post('/api/v1/weekly-plan/')
             .send({
                 date: null,
                 poundsToLose: 2,
@@ -42,41 +36,41 @@ describe('/POST Weekly Plan', () => {
 
 describe('/GET Weekly Plan', () => {
     it('should return 200', (done) => {
-        request(app)
-            .get(`/${testId}`)
+        request(app.callback())
+            .get(`/api/v1/weekly-plan/${testId}`)
             .expect(200, done);
     });
     it('should return 404', (done) => {
-        request(app)
-            .get('/99999999999')
+        request(app.callback())
+            .get('/api/v1/weekly-plan/99999999999')
             .expect(404, done);
     });
     it('should return 200', (done) => {
-        request(app)
-            .get('/')
+        request(app.callback())
+            .get('/api/v1/weekly-plan/')
             .expect(200, done);
     });
     it('should return 200', (done) => {
-        request(app)
-            .get('/?offset=1')
+        request(app.callback())
+            .get('/api/v1/weekly-plan/?offset=1')
             .expect(200, done);
     });
     it('should return 200', (done) => {
-        request(app)
-            .get('/?limit=2')
+        request(app.callback())
+            .get('/api/v1/weekly-plan/?limit=2')
             .expect(200, done);
     });
     it('should return 200', (done) => {
-        request(app)
-            .get('/?include=WeeklyAssessment')
+        request(app.callback())
+            .get('/api/v1/weekly-plan/?include=WeeklyAssessment')
             .expect(200, done);
     });
 });
 
 describe('/PUT Weekly Plan', () => {
     it('should return 200', (done) => {
-        request(app)
-            .put(`/${testId}`)
+        request(app.callback())
+            .put(`/api/v1/weekly-plan/${testId}`)
             .send({
                 date: new Date(),
                 poundsToLose: 2,
@@ -86,8 +80,8 @@ describe('/PUT Weekly Plan', () => {
             .expect(200, done);
     });
     it('should return 400', (done) => {
-        request(app)
-            .put(`/${testId}`)
+        request(app.callback())
+            .put(`/api/v1/weekly-plan/${testId}`)
             .send({
                 date: null,
                 poundsToLose: 2,
@@ -96,8 +90,8 @@ describe('/PUT Weekly Plan', () => {
             .expect(400, done);
     });
     it('should return 404', (done) => {
-        request(app)
-            .put(`/99999999`)
+        request(app.callback())
+            .put(`/api/v1/weekly-plan/99999999`)
             .send({
                 date: null,
                 poundsToLose: 2,
@@ -109,13 +103,13 @@ describe('/PUT Weekly Plan', () => {
 
 describe('/DELETE Weekly Plan', () => {
     it('should return 200', (done) => {
-        request(app)
-            .delete(`/${testId}`)
+        request(app.callback())
+            .delete(`/api/v1/weekly-plan/${testId}`)
             .expect(201, done);
     });
     it('should return 404', (done) => {
-        request(app)
-            .delete(`/99999999`)
+        request(app.callback())
+            .delete(`/api/v1/weekly-plan/99999999`)
             .expect(404, done);
     });
 });

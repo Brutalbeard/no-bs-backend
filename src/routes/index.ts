@@ -1,9 +1,15 @@
-import * as express from 'express';
-const router = express.Router();
+import { Context, Next } from 'koa';
+import Router from '@koa/router';
 
-/* GET base route. */
-router.get('/', function(req, res, next) {
-  res.sendStatus(200);
-});
+const router = new Router();
 
+async function defaultRoute(ctx: Context, next: Next) {
+    ctx.status = 200;
+    ctx.body = 'Hello World';
+    next();
+}
+
+router
+    .get('/api/v1', defaultRoute);
+    
 export default router;
