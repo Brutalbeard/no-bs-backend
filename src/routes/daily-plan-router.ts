@@ -1,115 +1,111 @@
-import * as express from 'express';
+import { Context, Next } from 'koa';
+import Router from '@koa/router';
 import DailyPlan from '../models/daily-plan-model';
 
-const router = express.Router();
+const router = new Router();
+
+router
+  .get('/api/v1/daily-plan', listPlans)
+  .get('/api/v1/daily-plan/:id', getPlanById)
+  .post('/api/v1/daily-plan', newPlan)
+  .put('/api/v1/daily-plan/:id', updatePlan)
+  .delete('/api/v1/daily-plan/:id', deleteById);
 
 /* GET deep dives listings. */
-router.get('/', function(req, res, next) {
-  DailyPlan.findAll({
-    limit: req.query.limit ? Number(req.query.limit) : 50,
-    offset: req.query.offset ? Number(req.query.offset) : 0
+async function listPlans(ctx: Context, next: Next) {
+  await DailyPlan.findAll({
+    limit: ctx.request.query.limit ? Number(ctx.request.query.limit) : 50,
+    offset: ctx.request.query.offset ? Number(ctx.request.query.offset) : 0
   })
-    .then((plans: DailyPlan[]) => {
-      res
-        .status(200)
-        .send(plans);
-      next();
-    })
-    .catch((err: Error) => {
-      res
-        .status(404)
-        .send({ message: err.message});
-      next();
-    });
-});
-
-router.get('/:id', function(req, res, next) {
-  DailyPlan
-    .findByPk(req.params.id)
-    .then((plan) => {
-      if (plan) {
-        res
-          .status(200)
-          .send(plan);
-        next();
-      } else {
-        res
-          .status(404)
-          .send({ message: 'Not found' });
-        next();
-      }
-    });
-});
-
-router.post('/', function(req, res, next) {
-  new DailyPlan(req.body)
-    .save()
-    .then((plan) => {
-      res
-        .status(200)
-        .send(plan);
+    .then((plans) => {
+      ctx.response.status = 200;
+      ctx.response.body = plans;
       next();
     })
     .catch((err) => {
-      res
-        .status(400)
-        .send({ message: err.message });
+      ctx.response.status = 400;
+      ctx.response.body = { message: err.message };
       next();
     });
-});
+}
 
-router.put('/:id', function(req, res, next) {
-  DailyPlan
-    .findByPk(req.params.id)
+async function getPlanById(ctx: Context, next: Next) {
+  await DailyPlan
+    .findByPk(ctx.params.id)
     .then((plan) => {
       if (plan) {
-        plan
-          .update(req.body)
+        ctx.response.status = 200;
+        ctx.response.body = plan;
+        next();
+      } else {
+        ctx.response.status = 404;
+        ctx.response.body = { message: 'Not found' };
+        next();
+      }
+    });
+}
+
+async function newPlan(ctx: Context, next: Next) {
+  await new DailyPlan(ctx.request.body)
+    .save()
+    .then((plan) => {
+      ctx.response.status = 200;
+      ctx.response.body = plan;
+      next();
+    })
+    .catch((err) => {
+      ctx.response.status = 400;
+      ctx.response.body = { message: err.message };
+      next();
+    });
+}
+
+async function updatePlan(ctx: Context, next: Next) {
+  await DailyPlan
+    .findByPk(ctx.params.id)
+    .then(async (plan) => {
+      if (plan) {
+        await plan
+          .update(ctx.request.body)
           .then((plan) => {
-            res
-              .status(200)
-              .send(plan);
+            ctx.response.status = 200;
+            ctx.response.body = plan;
             next();
           })
           .catch((err) => {
-            res
-              .status(400)
-              .send({ message: err.message });
+            ctx.response.status = 400;
+            ctx.response.body = { message: err.message };
             next();
           })
       } else {
-        res
-          .status(404)
-          .send({ message: 'Not found' });
+        ctx.response.status = 404;
+        ctx.response.body = { message: 'Not found' };
         next();
       }
     });
-});
+}
 
-router.delete('/:id', function(req, res, next) {
-  DailyPlan
-    .findByPk(req.params.id)
-    .then((plan) => {
-      plan.destroy()
+async function deleteById(ctx: Context, next: Next) {
+  await DailyPlan
+    .findByPk(ctx.params.id)
+    .then(async (plan) => {
+      await plan.destroy()
         .then(() => {
-          res
-            .status(201)
-            .send(plan);
+          ctx.response.status = 201;
+          ctx.response.body = { message: 'Deleted' };
           next();
         })
         .catch((err) => {
-          res
-            .status(400)
-            .send({ message: err.message });
+          ctx.response.status = 400;
+          ctx.response.body = { message: err.message };
           next();
         })
     })
     .catch((err) => {
-      res
-        .status(404)
-        .send({ message: err.message });
+      ctx.response.status = 404;
+      ctx.response.body = { message: err.message };
       next();
     });
-});
+}
 
 export default router;
