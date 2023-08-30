@@ -56,14 +56,11 @@ async function getById(ctx: Context, next: Next) {
 
 /* POST meal */
 async function newMeal(ctx: Context, next: Next) {
-  console.log("Made it to new meal with:", ctx.request.body)
   await new Meal(ctx.request.body)
     .save()
     .then((meal) => {
-      console.log("Meal saved:", meal)
       ctx.response.status = 200;
       ctx.response.body = meal;
-      console.log("CTX: ", ctx)
       next();
     })
     .catch((err) => {
