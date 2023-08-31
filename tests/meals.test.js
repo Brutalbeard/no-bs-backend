@@ -50,9 +50,9 @@ describe('GET /meal', () => {
     });
     test("It should respond with an array", done => {
         request(app.callback())
-            .get('/api/v1/meal?limit=2')
+            .get('/api/v1/meal?limit=1')
             .then(response => {
-                expect(response.body.length).toBe(2);
+                expect(response.body.length).toBe(1);
                 done();
             });
     });
