@@ -105,7 +105,7 @@ describe('/DELETE Weekly Plan', () => {
     it('should return 200', (done) => {
         request(app.callback())
             .delete(`/api/v1/weekly-plan/${testId}`)
-            .expect(201, done);
+            .expect(204, done);
     });
     it('should return 404', (done) => {
         request(app.callback())
