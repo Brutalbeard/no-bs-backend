@@ -16,7 +16,6 @@ router
 
 
 async function listItems(ctx: Context, next: Next) {
-    if(!ctx.state.model) { next(); return; }  
     await ctx.state.model.findAll({
         limit: ctx.request.query.limit ? Number(ctx.request.query.limit) : 50,
         offset: ctx.request.query.offset ? Number(ctx.request.query.offset) : 0,
@@ -47,16 +46,10 @@ async function getById(ctx: Context, next: Next) {
                 ctx.response.body = { message: 'Not found' };
                 next();
             }
-        })
-        .catch((err) => {
-            ctx.response.status = 404;
-            ctx.response.body = { message: err.message };
-            next();
         });
 }
 
 async function newItem(ctx: Context, next: Next) {
-    if(!ctx.state.model) { next(); return; }
     await new ctx.state.model(ctx.request.body)
         .save()
         .then((item) => {
@@ -72,49 +65,44 @@ async function newItem(ctx: Context, next: Next) {
 }
 
 async function updateItem(ctx: Context, next: Next) {
-    await ctx.state.model.findByPk(ctx.params.id)
-      .then(async (item) => {
-        if (item) {
-          await item
+    let item = await ctx.state.model.findByPk(ctx.params.id)
+
+    if (item) {
+        await item
             .update(ctx.request.body)
             .then((item) => {
-              ctx.response.status = 200;
-              next();
+                ctx.response.status = 200;
+                next();
             })
             .catch((err) => {
-              ctx.response.status = 400;
-              ctx.response.body = { message: err.message };
-              next();
+                ctx.response.status = 400;
+                ctx.response.body = { message: err.message };
+                next();
             })
-        } else {
-          ctx.response.status = 404;
-          ctx.response.body = { message: 'Not found' };
-          next();
-        }
-      });
-  }
-
-  async function deleteById(ctx: Context, next: Next) {
-    await ctx.state.model.findByPk(ctx.params.id)
-      .then(async (item) => {
-        await item
-          .destroy()
-          .then(() => {
-            ctx.response.status = 204;
-            ctx.response.body = { message: 'Deleted' };
-            next();
-          })
-          .catch((err) => {
-            ctx.response.status = 400;
-            ctx.response.body = { message: err.message };
-            next();
-          })
-      })
-      .catch((err) => {
+    } else {
         ctx.response.status = 404;
-        ctx.response.body = { message: err.message };
+        ctx.response.body = { message: 'Not found' };
         next();
-      });
-  }
+    }
+}
+
+async function deleteById(ctx: Context, next: Next) {
+    let item = await ctx.state.model.findByPk(ctx.params.id)
+    console.log(item)
+    if (item) {
+        await item
+            .destroy()
+            .then(() => {
+                ctx.response.status = 204;
+                ctx.response.body = { message: 'Deleted' };
+                next();
+            });
+    } else {
+        ctx.response.status = 404;
+        ctx.response.body = { message: 'Not found' };
+        next();
+    }
+
+}
 
 export default router;
