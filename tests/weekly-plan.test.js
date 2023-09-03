@@ -12,6 +12,7 @@ describe('/POST Weekly Plan', () => {
                 poundsToLose: 2,
                 goalsOutsideScale: "be awesome",
                 obstacles: "none",
+                differentThisWeek: "none",
             })
             .then((response) => {
                 testId = response.body.id;
