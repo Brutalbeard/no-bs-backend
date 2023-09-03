@@ -2,8 +2,6 @@ import {
     DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
 import {sequelize} from '../utils/sequelize';
-import WeeklyPlan from './weekly-plan-model';
-import MonthlyAssessment from './monthly-assessment-model';
 
 class MonthlyPlan extends Model<InferAttributes<MonthlyPlan>, InferCreationAttributes<MonthlyPlan>> {
     declare id: CreationOptional<number>;
