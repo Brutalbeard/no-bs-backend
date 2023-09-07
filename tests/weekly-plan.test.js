@@ -12,6 +12,7 @@ describe('/POST Weekly Plan', () => {
                 poundsToLose: 2,
                 goalsOutsideScale: "be awesome",
                 obstacles: "none",
+                differentThisWeek: "none",
             })
             .then((response) => {
                 testId = response.body.id;
@@ -105,7 +106,7 @@ describe('/DELETE Weekly Plan', () => {
     it('should return 200', (done) => {
         request(app.callback())
             .delete(`/api/v1/weekly-plan/${testId}`)
-            .expect(201, done);
+            .expect(204, done);
     });
     it('should return 404', (done) => {
         request(app.callback())

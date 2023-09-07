@@ -153,7 +153,7 @@ describe('/DELETE Daily Plan', () => {
         request(app.callback())
             .delete(`/api/v1/daily-plan/${testId}`)
             .then((response) => {
-                expect(response.statusCode).toEqual(201);
+                expect(response.statusCode).toEqual(204);
                 done();
             });
     });

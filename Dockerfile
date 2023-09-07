@@ -1,6 +1,6 @@
 # simple dockerfile to build a base image and expose port 3000
 
-FROM node:18-alpine
+FROM node:20-alpine3.
 
 WORKDIR /app
 COPY package.json /app

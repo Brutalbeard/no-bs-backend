@@ -1,7 +1,6 @@
 import {
     DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
-import WeeklyAssessment from './weekly-assessment-model';
 import {sequelize} from '../utils/sequelize';
 
 class WeeklyPlan extends Model<InferAttributes<WeeklyPlan>, InferCreationAttributes<WeeklyPlan>> {

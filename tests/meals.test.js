@@ -149,7 +149,7 @@ describe('DELETE /meal by id', () => {
         request(app.callback())
             .delete('/api/v1/meal/' + createdMealId)
             .then(response => {
-                expect(response.statusCode).toBe(201);
+                expect(response.statusCode).toBe(204);
                 done();
             });
     });
