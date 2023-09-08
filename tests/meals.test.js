@@ -37,6 +37,23 @@ describe('POST /', () => {
                 done();
             })
     });
+    test("It should create a record and include a daily plan", done => {
+        request(app.callback())
+            .post('/api/v1/meal')
+            .send({
+                "date": new Date(),
+                "actual": "Woohoo",
+                "onPlan": true,
+                "hungriness": "medium",
+                "satisfaction": "minimal",
+                "mealType": "Snack",
+                "dailyPlanId": 1
+            })
+            .then(response => {
+                expect(response.statusCode).toBe(200);
+                done();
+            })
+    });
 });
 
 describe('GET /meal', () => {
@@ -125,7 +142,7 @@ describe('PUT /meal by id', () => {
                 expect(response.statusCode).toBe(400);
                 done();
             });
-        });
+    });
     test("It should fail to update a specific meal", done => {
         request(app.callback())
             .put('/api/v1/meal/' + 80000)
@@ -141,7 +158,7 @@ describe('PUT /meal by id', () => {
                 expect(response.statusCode).toBe(404);
                 done();
             });
-        });
+    });
     test("It should fail to update a specific meal", done => {
         request(app.callback())
             .put('/api/v1/meal/RANDOM')
@@ -152,7 +169,7 @@ describe('PUT /meal by id', () => {
                 expect(response.statusCode).toBe(404);
                 done();
             });
-        });
+    });
 });
 
 describe('DELETE /meal by id', () => {
@@ -171,5 +188,6 @@ describe('DELETE /meal by id', () => {
                 expect(response.statusCode).toBe(404);
                 done();
             });
-        });
+    });
+
 });

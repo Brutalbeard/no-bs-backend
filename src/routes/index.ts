@@ -48,7 +48,10 @@ async function listItems(ctx: Context, next: Next) {
  */
 async function getById(ctx: Context, next: Next) {
     let item: any = await ctx.state.model
-        .findByPk(ctx.params.id)
+        .findByPk(ctx.params.id, {
+            //@ts-ignore
+            include: ctx.request.query.include ? ctx.request.query.include.split(',') : []
+        })
         .catch((err: Error) => {
             ctx.response.status = 400;
             ctx.response.body = { message: err.message };
