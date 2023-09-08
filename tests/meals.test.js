@@ -142,6 +142,17 @@ describe('PUT /meal by id', () => {
                 done();
             });
         });
+    test("It should fail to update a specific meal", done => {
+        request(app.callback())
+            .put('/api/v1/meal/RANDOM')
+            .send({
+                "date": new Date(),
+            })
+            .then(response => {
+                expect(response.statusCode).toBe(404);
+                done();
+            });
+        });
 });
 
 describe('DELETE /meal by id', () => {

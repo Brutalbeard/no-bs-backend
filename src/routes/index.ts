@@ -35,18 +35,22 @@ async function listItems(ctx: Context, next: Next) {
 }
 
 async function getById(ctx: Context, next: Next) {
-    await ctx.state.model.findByPk(ctx.params.id)
-        .then((item) => {
-            if (item) {
-                ctx.response.status = 200;
-                ctx.response.body = item;
-                next();
-            } else {
-                ctx.response.status = 404;
-                ctx.response.body = { message: 'Not found' };
-                next();
-            }
+    let item = await ctx.state.model
+        .findByPk(ctx.params.id)
+        .catch((err) => {
+            ctx.response.status = 400;
+            ctx.response.body = { message: err.message };
         });
+        
+    if (item) {
+        ctx.response.status = 200;
+        ctx.response.body = item;
+        next();
+    } else {
+        ctx.response.status = 404;
+        ctx.response.body = { message: 'Not found' };
+        next();
+    }
 }
 
 async function newItem(ctx: Context, next: Next) {
@@ -65,13 +69,19 @@ async function newItem(ctx: Context, next: Next) {
 }
 
 async function updateItem(ctx: Context, next: Next) {
-    let item = await ctx.state.model.findByPk(ctx.params.id)
+    let item = await ctx.state.model
+        .findByPk(ctx.params.id)
+        .catch((err) => {
+            ctx.response.status = 400;
+            ctx.response.body = { message: err.message };
+        });
 
     if (item) {
         await item
             .update(ctx.request.body)
             .then((item) => {
                 ctx.response.status = 200;
+                ctx.response.body = item;
                 next();
             })
             .catch((err) => {
@@ -87,8 +97,12 @@ async function updateItem(ctx: Context, next: Next) {
 }
 
 async function deleteById(ctx: Context, next: Next) {
-    let item = await ctx.state.model.findByPk(ctx.params.id)
-    console.log(item)
+    let item = await ctx.state.model
+        .findByPk(ctx.params.id)
+        .catch((err) => {
+            ctx.response.status = 400;
+            ctx.response.body = { message: err.message };
+        });
     if (item) {
         await item
             .destroy()

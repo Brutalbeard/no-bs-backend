@@ -32,19 +32,22 @@ async function listItems(ctx, next) {
     });
 }
 async function getById(ctx, next) {
-    await ctx.state.model.findByPk(ctx.params.id)
-        .then((item) => {
-        if (item) {
-            ctx.response.status = 200;
-            ctx.response.body = item;
-            next();
-        }
-        else {
-            ctx.response.status = 404;
-            ctx.response.body = { message: 'Not found' };
-            next();
-        }
+    let item = await ctx.state.model
+        .findByPk(ctx.params.id)
+        .catch((err) => {
+        ctx.response.status = 400;
+        ctx.response.body = { message: err.message };
     });
+    if (item) {
+        ctx.response.status = 200;
+        ctx.response.body = item;
+        next();
+    }
+    else {
+        ctx.response.status = 404;
+        ctx.response.body = { message: 'Not found' };
+        next();
+    }
 }
 async function newItem(ctx, next) {
     await new ctx.state.model(ctx.request.body)
@@ -61,12 +64,18 @@ async function newItem(ctx, next) {
     });
 }
 async function updateItem(ctx, next) {
-    let item = await ctx.state.model.findByPk(ctx.params.id);
+    let item = await ctx.state.model
+        .findByPk(ctx.params.id)
+        .catch((err) => {
+        ctx.response.status = 400;
+        ctx.response.body = { message: err.message };
+    });
     if (item) {
         await item
             .update(ctx.request.body)
             .then((item) => {
             ctx.response.status = 200;
+            ctx.response.body = item;
             next();
         })
             .catch((err) => {
@@ -82,8 +91,12 @@ async function updateItem(ctx, next) {
     }
 }
 async function deleteById(ctx, next) {
-    let item = await ctx.state.model.findByPk(ctx.params.id);
-    console.log(item);
+    let item = await ctx.state.model
+        .findByPk(ctx.params.id)
+        .catch((err) => {
+        ctx.response.status = 400;
+        ctx.response.body = { message: err.message };
+    });
     if (item) {
         await item
             .destroy()
