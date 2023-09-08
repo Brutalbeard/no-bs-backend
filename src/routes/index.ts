@@ -15,6 +15,12 @@ router
 
 
 
+/**
+ * This function lists all the items in the database, with optional pagination and includes.
+ *
+ * @param {Context} ctx - The context of the request.
+ * @param {Next} next - The next function to be executed.
+ */
 async function listItems(ctx: Context, next: Next) {
     await ctx.state.model.findAll({
         limit: ctx.request.query.limit ? Number(ctx.request.query.limit) : 50,
@@ -22,26 +28,32 @@ async function listItems(ctx: Context, next: Next) {
         //@ts-ignore
         include: ctx.request.query.include ? ctx.request.query.include.split(',') : []
     })
-        .then((items) => {
+        .then((items: any[]) => {
             ctx.response.status = 200;
             ctx.response.body = items;
             next();
         })
-        .catch((err) => {
+        .catch((err: Error) => {
             ctx.response.status = 400;
             ctx.response.body = { message: err.message };
             next();
         });
 }
 
+/**
+ * Retrieves a single item by ID
+ *
+ * @param {Context} ctx - the Koa request/response context object
+ * @param {Next} next - the Koa next callback
+ */
 async function getById(ctx: Context, next: Next) {
-    let item = await ctx.state.model
+    let item: any = await ctx.state.model
         .findByPk(ctx.params.id)
-        .catch((err) => {
+        .catch((err: Error) => {
             ctx.response.status = 400;
             ctx.response.body = { message: err.message };
         });
-        
+
     if (item) {
         ctx.response.status = 200;
         ctx.response.body = item;
@@ -53,25 +65,37 @@ async function getById(ctx: Context, next: Next) {
     }
 }
 
+/**
+ * Creates a new item in the database
+ * 
+ * @param ctx the Koa request/response context object
+ * @param next the Koa next callback
+ */
 async function newItem(ctx: Context, next: Next) {
     await new ctx.state.model(ctx.request.body)
         .save()
-        .then((item) => {
+        .then((item: any) => {
             ctx.response.status = 200;
             ctx.response.body = item;
             next();
         })
-        .catch((err) => {
+        .catch((err: Error) => {
             ctx.response.status = 400;
             ctx.response.body = { message: err.message };
             next();
         });
 }
 
+/**
+ * Updates an existing item in the database
+ * 
+ * @param ctx the Koa request/response context object
+ * @param next the Koa next callback
+ */
 async function updateItem(ctx: Context, next: Next) {
-    let item = await ctx.state.model
+    let item: any = await ctx.state.model
         .findByPk(ctx.params.id)
-        .catch((err) => {
+        .catch((err: Error) => {
             ctx.response.status = 400;
             ctx.response.body = { message: err.message };
         });
@@ -79,12 +103,12 @@ async function updateItem(ctx: Context, next: Next) {
     if (item) {
         await item
             .update(ctx.request.body)
-            .then((item) => {
+            .then((item: any) => {
                 ctx.response.status = 200;
                 ctx.response.body = item;
                 next();
             })
-            .catch((err) => {
+            .catch((err: Error) => {
                 ctx.response.status = 400;
                 ctx.response.body = { message: err.message };
                 next();
@@ -96,10 +120,16 @@ async function updateItem(ctx: Context, next: Next) {
     }
 }
 
+/**
+ * Deletes an item from the database
+ * 
+ * @param ctx the Koa request/response context object
+ * @param next the Koa next callback
+ */
 async function deleteById(ctx: Context, next: Next) {
-    let item = await ctx.state.model
+    let item: any = await ctx.state.model
         .findByPk(ctx.params.id)
-        .catch((err) => {
+        .catch((err: Error) => {
             ctx.response.status = 400;
             ctx.response.body = { message: err.message };
         });
@@ -116,7 +146,6 @@ async function deleteById(ctx: Context, next: Next) {
         ctx.response.body = { message: 'Not found' };
         next();
     }
-
 }
 
 export default router;

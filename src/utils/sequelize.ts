@@ -26,13 +26,13 @@ async function setupDatabase() {
         .authenticate()
         .then(() => {
             console.log('Connection has been established successfully.');
-        }).catch((err: any) => {
+        }).catch((err: Error) => {
             console.error('Unable to connect to the database:', err);
         });
 
     await sequelize
         .sync()
-        .catch((err: any) => console.error(err));
+        .catch((err: Error) => console.error(err));
 }
 
 export { sequelize, setupDatabase };
