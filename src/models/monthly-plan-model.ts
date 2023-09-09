@@ -5,8 +5,6 @@ import {sequelize} from '../utils/sequelize';
 
 class MonthlyPlan extends Model<InferAttributes<MonthlyPlan>, InferCreationAttributes<MonthlyPlan>> {
     declare id: CreationOptional<number>;
-    declare createdAt: Date;
-    declare updatedAt: Date;
     declare date: Date;
     declare userId: number;
 
@@ -26,8 +24,6 @@ MonthlyPlan.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
     date: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -44,7 +40,14 @@ MonthlyPlan.init({
     supportContacts: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'MonthlyPlan',
+    modelName: 'monthlyPlan',
+    paranoid: true,
+    defaultScope: {
+        attributes: {
+            exclude: ['deletedAt'],
+        }
+    },
+    timestamps: true,
 });
 
 export default MonthlyPlan;

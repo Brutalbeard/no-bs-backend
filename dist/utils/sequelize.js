@@ -3,21 +3,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setupDatabase = exports.sequelize = void 0;
 const sequelize_1 = require("sequelize");
 require('dotenv').config();
+// const sequelize = new Sequelize({
+//     dialect: 'postgres',
+//     host: process.env.PG_DATABASE_ADDRESS,
+//     port: parseInt(process.env.PG_DATABASE_PORT),
+//     username: process.env.PG_USERNAME,
+//     password: process.env.PG_PASSWORD,
+//     database: process.env.PG_DATABASE_NAME,
+//     logging: false
+// }) 
 const sequelize = new sequelize_1.Sequelize({
-    dialect: 'postgres',
-    host: process.env.PG_DATABASE_ADDRESS,
-    port: parseInt(process.env.PG_DATABASE_PORT),
-    username: process.env.PG_USERNAME,
-    password: process.env.PG_PASSWORD,
-    database: process.env.PG_DATABASE_NAME,
-    logging: false
+    dialect: 'sqlite',
+    storage: './database.sqlite',
+    logging: false,
 });
 exports.sequelize = sequelize;
-// const sequelize = new Sequelize({
-//     dialect: 'sqlite',
-//     storage: './database.sqlite',
-//     logging: false
-// })
 // const sequelize = new Sequelize('sqlite::memory:');
 async function setupDatabase() {
     await sequelize

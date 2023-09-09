@@ -6,8 +6,6 @@ import {sequelize} from '../utils/sequelize';
 
 class MonthlyAssessment extends Model<InferAttributes<MonthlyAssessment>, InferCreationAttributes<MonthlyAssessment>> {
     declare id: CreationOptional<number>;
-    declare createdAt: Date;
-    declare updatedAt: Date;
     declare date: Date;
     declare userId: number;
 
@@ -55,8 +53,6 @@ MonthlyAssessment.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
     date: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -101,7 +97,14 @@ MonthlyAssessment.init({
     workOnNextMonth: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'MonthlyAssessment',
+    modelName: 'monthlyAssessment',
+    paranoid: true,
+    defaultScope: {
+        attributes: {
+            exclude: ['deletedAt'],
+        }
+    },
+    timestamps: true,
 });
 
 export default MonthlyAssessment;

@@ -63,7 +63,7 @@ describe('/GET Weekly Plan', () => {
     });
     it('should return 200', (done) => {
         request(app.callback())
-            .get('/api/v1/weekly-plan/?include=WeeklyAssessment')
+            .get('/api/v1/weekly-plan/?include=weeklyAssessment')
             .expect(200, done);
     });
 });

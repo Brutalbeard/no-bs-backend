@@ -10,8 +10,6 @@ MonthlyPlan.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: sequelize_1.DataTypes.DATE,
-    updatedAt: sequelize_1.DataTypes.DATE,
     date: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
@@ -25,6 +23,13 @@ MonthlyPlan.init({
     supportContacts: sequelize_1.DataTypes.STRING,
 }, {
     sequelize: sequelize_2.sequelize,
-    modelName: 'MonthlyPlan',
+    modelName: 'monthlyPlan',
+    paranoid: true,
+    defaultScope: {
+        attributes: {
+            exclude: ['deletedAt'],
+        }
+    },
+    timestamps: true,
 });
 exports.default = MonthlyPlan;

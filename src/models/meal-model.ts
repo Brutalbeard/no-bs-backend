@@ -8,8 +8,6 @@ import DailyPlan from './daily-plan-model';
 
 class Meal extends Model<InferAttributes<Meal>, InferCreationAttributes<Meal>> {
     declare id: CreationOptional<number>;
-    declare createdAt: Date;
-    declare updatedAt: Date;
     declare date: Date;
     declare actual: string | null;
     declare onPlan: boolean | null;
@@ -28,8 +26,6 @@ Meal.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
     date: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -50,7 +46,14 @@ Meal.init({
     },
 }, {
     sequelize,
-    modelName: 'Meal',
+    modelName: 'meal',
+    paranoid: true,
+    defaultScope: {
+        attributes: {
+            exclude: ['deletedAt'],
+        }
+    },
+    timestamps: true,
 });
 
 export default Meal; 

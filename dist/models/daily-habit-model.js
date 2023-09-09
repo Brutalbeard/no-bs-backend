@@ -10,8 +10,6 @@ DailyHabit.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: sequelize_1.DataTypes.DATE,
-    updatedAt: sequelize_1.DataTypes.DATE,
     date: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
@@ -25,6 +23,13 @@ DailyHabit.init({
     sevenPlusHoursOfSleep: sequelize_1.DataTypes.BOOLEAN,
 }, {
     sequelize: sequelize_2.sequelize,
-    modelName: 'DailyHabit',
+    modelName: 'dailyHabit',
+    paranoid: true,
+    defaultScope: {
+        attributes: {
+            exclude: ['deletedAt'],
+        }
+    },
+    timestamps: true,
 });
 exports.default = DailyHabit;

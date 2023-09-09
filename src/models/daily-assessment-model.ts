@@ -5,8 +5,6 @@ import {sequelize} from '../utils/sequelize';
 
 class DailyAssessment extends Model<InferAttributes<DailyAssessment>, InferCreationAttributes<DailyAssessment>> {
     declare id: CreationOptional<number>;
-    declare createdAt: Date;
-    declare updatedAt: Date;
     declare date: Date;
     declare sixtyFourOuncesOfWater: boolean | null;
     declare sevenPlusHoursOfSleep: boolean | null;
@@ -22,8 +20,6 @@ DailyAssessment.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
     date: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -36,7 +32,14 @@ DailyAssessment.init({
     otherThoughts: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'DailyAssessment',
+    modelName: 'dailyAssessment',
+    paranoid: true,
+    defaultScope: {
+        attributes: {
+            exclude: ['deletedAt'],
+        }
+    },
+    timestamps: true,
 });
 
 export default DailyAssessment;

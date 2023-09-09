@@ -10,8 +10,6 @@ DailyPlan.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: sequelize_1.DataTypes.DATE,
-    updatedAt: sequelize_1.DataTypes.DATE,
     date: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
@@ -23,6 +21,13 @@ DailyPlan.init({
     overcome: sequelize_1.DataTypes.STRING,
 }, {
     sequelize: sequelize_2.sequelize,
-    modelName: 'DailyPlan',
+    modelName: 'dailyPlan',
+    paranoid: true,
+    defaultScope: {
+        attributes: {
+            exclude: ['deletedAt'],
+        }
+    },
+    timestamps: true,
 });
 exports.default = DailyPlan;

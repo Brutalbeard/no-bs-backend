@@ -24,9 +24,9 @@ app.use(async (ctx: Context, next: Next) => {
 });
 
 app.use(async (ctx: Context, next: Next) => {
-    if(RegExp(/\/api\/v1\/meal/).test(ctx.url)) {ctx.state.model = sequelize.models.Meal;}
-    else if(RegExp(/\/api\/v1\/daily-plan/).test(ctx.url)) {ctx.state.model = sequelize.models.DailyPlan;}
-    else if(RegExp(/\/api\/v1\/weekly-plan/).test(ctx.url)) {ctx.state.model = sequelize.models.WeeklyPlan;}
+    if(RegExp(/\/api\/v1\/meal/).test(ctx.url)) {ctx.state.model = sequelize.models.meal;}
+    else if(RegExp(/\/api\/v1\/daily-plan/).test(ctx.url)) {ctx.state.model = sequelize.models.dailyPlan;}
+    else if(RegExp(/\/api\/v1\/weekly-plan/).test(ctx.url)) {ctx.state.model = sequelize.models.weeklyPlan;}
     else {ctx.state.model = undefined;}
 
     console.log(ctx.state)

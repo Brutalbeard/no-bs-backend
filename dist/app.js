@@ -24,13 +24,13 @@ app.use(async (ctx, next) => {
 });
 app.use(async (ctx, next) => {
     if (RegExp(/\/api\/v1\/meal/).test(ctx.url)) {
-        ctx.state.model = sequelize_1.sequelize.models.Meal;
+        ctx.state.model = sequelize_1.sequelize.models.meal;
     }
     else if (RegExp(/\/api\/v1\/daily-plan/).test(ctx.url)) {
-        ctx.state.model = sequelize_1.sequelize.models.DailyPlan;
+        ctx.state.model = sequelize_1.sequelize.models.dailyPlan;
     }
     else if (RegExp(/\/api\/v1\/weekly-plan/).test(ctx.url)) {
-        ctx.state.model = sequelize_1.sequelize.models.WeeklyPlan;
+        ctx.state.model = sequelize_1.sequelize.models.weeklyPlan;
     }
     else {
         ctx.state.model = undefined;

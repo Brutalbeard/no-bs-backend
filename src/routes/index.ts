@@ -1,6 +1,5 @@
 import { Context, Next } from 'koa';
 import Router from '@koa/router';
-import { sequelize } from '../utils/sequelize';
 
 const router = new Router({
     prefix: '/api/v1'
@@ -12,7 +11,7 @@ router
     .post('/:model', newItem)
     .put('/:model/:id', updateItem)
     .delete('/:model/:id', deleteById);
-
+ 
 
 
 /**
@@ -26,7 +25,7 @@ async function listItems(ctx: Context, next: Next) {
         limit: ctx.request.query.limit ? Number(ctx.request.query.limit) : 50,
         offset: ctx.request.query.offset ? Number(ctx.request.query.offset) : 0,
         //@ts-ignore
-        include: ctx.request.query.include ? ctx.request.query.include.split(',') : []
+        include: ctx.request.query.include ? ctx.request.query.include.split(',') : [],
     })
         .then((items: any[]) => {
             ctx.response.status = 200;
@@ -50,7 +49,7 @@ async function getById(ctx: Context, next: Next) {
     let item: any = await ctx.state.model
         .findByPk(ctx.params.id, {
             //@ts-ignore
-            include: ctx.request.query.include ? ctx.request.query.include.split(',') : []
+            include: ctx.request.query.include ? ctx.request.query.include.split(',') : [],
         })
         .catch((err: Error) => {
             ctx.response.status = 400;

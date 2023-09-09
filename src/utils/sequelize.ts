@@ -15,7 +15,7 @@ require('dotenv').config();
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: './database.sqlite',
-    logging: false
+    logging: false,
 })
 
 // const sequelize = new Sequelize('sqlite::memory:');

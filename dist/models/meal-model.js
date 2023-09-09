@@ -10,8 +10,6 @@ Meal.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: sequelize_1.DataTypes.DATE,
-    updatedAt: sequelize_1.DataTypes.DATE,
     date: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
@@ -32,6 +30,13 @@ Meal.init({
     },
 }, {
     sequelize: sequelize_2.sequelize,
-    modelName: 'Meal',
+    modelName: 'meal',
+    paranoid: true,
+    defaultScope: {
+        attributes: {
+            exclude: ['deletedAt'],
+        }
+    },
+    timestamps: true,
 });
 exports.default = Meal;
