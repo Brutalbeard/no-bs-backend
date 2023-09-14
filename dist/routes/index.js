@@ -42,11 +42,12 @@ var router_1 = __importDefault(require("@koa/router"));
 var router = new router_1["default"]({
     prefix: '/api/v1'
 });
+var modelRoutePaths = '[meal|daily-plan|weekly-plan]';
 router
-    .get('/:model', listItems)
-    .get('/:model/:id', getById)
-    .post('/:model', newItem)
-    .put('/:model/:id', updateItem)["delete"]('/:model/:id', deleteById);
+    .get("/" + modelRoutePaths, listItems)
+    .get("/" + modelRoutePaths + "/:id", getById)
+    .post("/" + modelRoutePaths, newItem)
+    .put("/" + modelRoutePaths + "/:id", updateItem)["delete"]("/" + modelRoutePaths + "/:id", deleteById);
 /**
  * This function lists all the items in the database, with optional pagination and includes.
  *

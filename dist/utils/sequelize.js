@@ -34,24 +34,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 var sequelize_1 = require("sequelize");
+var events_1 = __importDefault(require("./events"));
 require('dotenv').config();
-// const sequelize = new Sequelize({
-//     dialect: 'postgres',
-//     host: process.env.PG_DATABASE_ADDRESS,
-//     port: parseInt(process.env.PG_DATABASE_PORT),
-//     username: process.env.PG_USERNAME,
-//     password: process.env.PG_PASSWORD,
-//     database: process.env.PG_DATABASE_NAME,
-//     logging: false
-// }) 
 var sequelize = new sequelize_1.Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite',
+    dialect: 'postgres',
+    host: process.env.PG_DATABASE_ADDRESS,
+    port: parseInt(process.env.PG_DATABASE_PORT),
+    username: process.env.PG_USERNAME,
+    password: process.env.PG_PASSWORD,
+    database: process.env.PG_DATABASE_NAME,
     logging: false
 });
 exports.sequelize = sequelize;
+// const sequelize = new Sequelize({
+//     dialect: 'sqlite',
+//     storage: './database.sqlite',
+//     logging: false
+// })
 // const sequelize = new Sequelize('sqlite::memory:');
 function setupDatabase() {
     return __awaiter(this, void 0, void 0, function () {
@@ -61,13 +65,22 @@ function setupDatabase() {
                         .authenticate()
                         .then(function () {
                         console.log('Connection has been established successfully.');
+                        events_1["default"].emit('db-connected', true);
                     })["catch"](function (err) {
                         console.error('Unable to connect to the database:', err);
+                        events_1["default"].emit('db-connected', false);
                     })];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, sequelize
-                            .sync()["catch"](function (err) { return console.error(err); })];
+                            .sync()
+                            .then(function () {
+                            console.log('Database synchronized');
+                            events_1["default"].emit('db-synced', true);
+                        })["catch"](function (err) {
+                            console.error('Database sync failed', err);
+                            events_1["default"].emit('db-synced', false);
+                        })];
                 case 2:
                     _a.sent();
                     return [2 /*return*/];

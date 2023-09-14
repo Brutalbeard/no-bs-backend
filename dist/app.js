@@ -42,6 +42,7 @@ exports.__esModule = true;
 var koa_1 = __importDefault(require("koa"));
 var koa_logger_1 = __importDefault(require("koa-logger"));
 var bodyparser_1 = __importDefault(require("@koa/bodyparser"));
+var node_process_1 = __importDefault(require("node:process"));
 var sequelize_1 = require("./utils/sequelize");
 var db_setup_1 = require("./utils/db-setup");
 var request_id_1 = __importDefault(require("./utils/request-id"));
@@ -49,6 +50,8 @@ require('dotenv').config();
 sequelize_1.setupDatabase();
 db_setup_1.createDatabaseAssociations();
 var index_1 = __importDefault(require("./routes/index"));
+var readiness_1 = __importDefault(require("./routes/readiness"));
+var liveness_1 = __importDefault(require("./routes/liveness"));
 var app = new koa_1["default"]();
 app.use(bodyparser_1["default"]());
 app.use(koa_logger_1["default"]());
@@ -80,19 +83,35 @@ app.use(function (ctx, next) { return __awaiter(_this, void 0, void 0, function 
         else {
             ctx.state.model = undefined;
         }
-        console.log(ctx.state);
         return [2 /*return*/, next()];
     });
 }); });
 // add a unique request id to each request
 app.use(request_id_1["default"]);
+app.use(readiness_1["default"].routes());
+app.use(readiness_1["default"].allowedMethods());
+app.use(liveness_1["default"].routes());
+app.use(liveness_1["default"].allowedMethods());
 app.use(index_1["default"].routes());
 app.use(index_1["default"].allowedMethods());
-// app.use(mealRouter.routes());
-// app.use(mealRouter.allowedMethods());
-// app.use(dailyPlanRouter.routes());
-// app.use(dailyPlanRouter.allowedMethods());
-// app.use(weeklyPlanRouter.routes());
-// app.use(weeklyPlanRouter.allowedMethods());
-// app.use(apiPath + '/weekly-plan', weeklyPlanRouter);
+node_process_1["default"].on('SIGINT', function () { return __awaiter(_this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log('Gracefully shutting down');
+                return [4 /*yield*/, sequelize_1.sequelize
+                        .close()
+                        .then(function () {
+                        console.log('Database connection closed');
+                        node_process_1["default"].exit(0);
+                    })["catch"](function (err) {
+                        console.log('Error closing database connection: ', err.message);
+                        node_process_1["default"].exit(1);
+                    })];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); });
 exports["default"] = app;

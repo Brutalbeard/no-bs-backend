@@ -1,18 +1,18 @@
 import { Context, Next } from 'koa';
 import Router from '@koa/router';
-import { sequelize } from '../utils/sequelize';
 
 const router = new Router({
     prefix: '/api/v1'
 });
 
-router
-    .get('/:model', listItems)
-    .get('/:model/:id', getById)
-    .post('/:model', newItem)
-    .put('/:model/:id', updateItem)
-    .delete('/:model/:id', deleteById);
+let modelRoutePaths = '[meal|daily-plan|weekly-plan]'
 
+router
+    .get(`/${modelRoutePaths}`, listItems)
+    .get(`/${modelRoutePaths}/:id`, getById)
+    .post(`/${modelRoutePaths}`, newItem)
+    .put(`/${modelRoutePaths}/:id`, updateItem)
+    .delete(`/${modelRoutePaths}/:id`, deleteById);
 
 
 /**
