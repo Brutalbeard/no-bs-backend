@@ -32,7 +32,7 @@ WeeklyPlan.init({
     obstacles: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'weeklyPlan',
+    modelName: 'weekly-plan',
     paranoid: true,
     defaultScope: {
         attributes: {

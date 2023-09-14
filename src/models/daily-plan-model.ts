@@ -42,7 +42,7 @@ DailyPlan.init({
     overcome: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'dailyPlan',
+    modelName: 'daily-plan',
     paranoid: true,
     defaultScope: {
         attributes: {

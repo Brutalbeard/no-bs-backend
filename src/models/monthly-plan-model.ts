@@ -40,7 +40,7 @@ MonthlyPlan.init({
     supportContacts: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'monthlyPlan',
+    modelName: 'monthly-plan',
     paranoid: true,
     defaultScope: {
         attributes: {

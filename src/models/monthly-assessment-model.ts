@@ -97,7 +97,7 @@ MonthlyAssessment.init({
     workOnNextMonth: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'monthlyAssessment',
+    modelName: 'monthly-assessment',
     paranoid: true,
     defaultScope: {
         attributes: {

@@ -39,7 +39,7 @@ WeeklyAssessment.init({
     weeklyNotes: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'weeklyAssessment',
+    modelName: 'weekly-assessment',
     paranoid: true,
     defaultScope: {
         attributes: {

@@ -34,7 +34,7 @@ DailyHabit.init({
     sevenPlusHoursOfSleep: DataTypes.BOOLEAN,
 }, {
     sequelize,
-    modelName: 'dailyHabit',
+    modelName: 'daily-habit',
     paranoid: true,
     defaultScope: {
         attributes: {

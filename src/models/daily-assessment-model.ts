@@ -32,7 +32,7 @@ DailyAssessment.init({
     otherThoughts: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'dailyAssessment',
+    modelName: 'daily-assessment',
     paranoid: true,
     defaultScope: {
         attributes: {

@@ -41,15 +41,4 @@ app.use(requestIdHeader);
 app.use(indexRouter.routes());
 app.use(indexRouter.allowedMethods());
 
-// app.use(mealRouter.routes());
-// app.use(mealRouter.allowedMethods());
-
-// app.use(dailyPlanRouter.routes());
-// app.use(dailyPlanRouter.allowedMethods());
-
-// app.use(weeklyPlanRouter.routes());
-// app.use(weeklyPlanRouter.allowedMethods());
-
-// app.use(apiPath + '/weekly-plan', weeklyPlanRouter);
-
 export default app;
