@@ -29,11 +29,8 @@ app.use(async (ctx: Context, next: Next) => {
     else if(RegExp(/\/api\/v1\/weekly-plan/).test(ctx.url)) {ctx.state.model = sequelize.models.weeklyPlan;}
     else {ctx.state.model = undefined;}
 
-    console.log(ctx.state)
-
     return next();
 });
-        
 
 // add a unique request id to each request
 app.use(requestIdHeader);

@@ -40,17 +40,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var router_1 = __importDefault(require("@koa/router"));
 var sequelize_1 = require("../utils/sequelize");
-var routeMatch = '[' + Object.keys(sequelize_1.sequelize.models).join('|') + ']';
-console.log(routeMatch);
+var modelRoutePaths = Object.keys(sequelize_1.sequelize.models).join('|');
+// let modelRoutePaths = '[meal|daily-plan|weekly-plan]'
 var router = new router_1["default"]({
     prefix: '/api/v1'
 });
 router
-    .get("/" + routeMatch, listItems)
-    .get("/" + routeMatch + "/:id", getById)
-    .post("/" + routeMatch, newItem)
-    .put("/" + routeMatch + "/:id", updateItem)["delete"]("/" + routeMatch + "/:id", deleteById);
-console.log(sequelize_1.sequelize.models);
+    .get("/[meal]", listItems)
+    .get("/" + modelRoutePaths + "/:id", getById)
+    .post("/" + modelRoutePaths, newItem)
+    .put("/" + modelRoutePaths + "/:id", updateItem)["delete"]("/" + modelRoutePaths + "/:id", deleteById);
 /**
  * This function lists all the items in the database, with optional pagination and includes.
  *
