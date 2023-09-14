@@ -2,20 +2,20 @@ import { Context, Next } from 'koa';
 import Router from '@koa/router';
 import { sequelize } from '../utils/sequelize';
 
-const routeMatch = '[' + Object.keys(sequelize.models).join('|') + ']';
-console.log(routeMatch)
+let modelRoutePaths = Object.keys(sequelize.models).join('|');
+// let modelRoutePaths = '[meal|daily-plan|weekly-plan]'
+
 const router = new Router({
     prefix: '/api/v1'
 });
 
 router
-    .get(`/${routeMatch}`, listItems)
-    .get(`/${routeMatch}/:id`, getById)
-    .post(`/${routeMatch}`, newItem)
-    .put(`/${routeMatch}/:id`, updateItem)
-    .delete(`/${routeMatch}/:id`, deleteById);
- 
-console.log(sequelize.models)
+    .get(`/[meal]`, listItems)
+    .get(`/${modelRoutePaths}/:id`, getById)
+    .post(`/${modelRoutePaths}`, newItem)
+    .put(`/${modelRoutePaths}/:id`, updateItem)
+    .delete(`/${modelRoutePaths}/:id`, deleteById);
+
 
 /**
  * This function lists all the items in the database, with optional pagination and includes.
