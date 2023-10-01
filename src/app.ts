@@ -45,7 +45,8 @@ process.on('SIGINT', async () => {
     await sequelize
         .close()
         .then(() => {
-            console.log('Database connection closed');
+            // console.log('Database connection closed');
+            // process.exit(0);
         })
         .catch((err: Error) => {
             console.log('Error closing database connection: ', err.message);
