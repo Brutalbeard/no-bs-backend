@@ -5,10 +5,7 @@ import {sequelize} from '../utils/sequelize';
 
 class WeeklyAssessment extends Model<InferAttributes<WeeklyAssessment>, InferCreationAttributes<WeeklyAssessment>> {
     declare id: CreationOptional<number>;
-    declare createdAt: Date;
-    declare updatedAt: Date;
     declare date: Date;
-
     declare thisWeekIWeighed: number;
     declare planningSelfRatingThisWeek: number;
     declare planningSelfRatingReason: string;
@@ -26,8 +23,6 @@ WeeklyAssessment.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
     date: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -44,7 +39,14 @@ WeeklyAssessment.init({
     weeklyNotes: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'WeeklyAssessment',
+    modelName: 'weekly-assessment',
+    paranoid: true,
+    defaultScope: {
+        attributes: {
+            exclude: ['deletedAt'],
+        }
+    },
+    timestamps: true,
 });
 
 export default WeeklyAssessment;

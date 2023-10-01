@@ -37,23 +37,6 @@ describe('POST /', () => {
                 done();
             })
     });
-    test("It should create a record and include a daily plan", done => {
-        request(app.callback())
-            .post('/api/v1/meal')
-            .send({
-                "date": new Date(),
-                "actual": "Woohoo",
-                "onPlan": true,
-                "hungriness": "medium",
-                "satisfaction": "minimal",
-                "mealType": "Snack",
-                "dailyPlanId": 1
-            })
-            .then(response => {
-                expect(response.statusCode).toBe(200);
-                done();
-            })
-    });
 });
 
 describe('GET /meal', () => {

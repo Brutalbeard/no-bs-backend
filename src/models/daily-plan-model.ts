@@ -2,15 +2,13 @@ import {
     DataTypes, HasManyAddAssociationMixin, HasManyGetAssociationsMixin,
     HasManySetAssociationsMixin, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
-import {sequelize} from '../utils/sequelize';
+import { sequelize } from '../utils/sequelize';
 
 import DailyAssessment from './daily-assessment-model';
 import Meal from './meal-model';
 
 class DailyPlan extends Model<InferAttributes<DailyPlan>, InferCreationAttributes<DailyPlan>> {
     declare id: CreationOptional<number>;
-    declare createdAt: Date;
-    declare updatedAt: Date;
     declare date: Date;
     declare gratitude: string | null;
     declare todayMyWhyIs: string | null;
@@ -33,8 +31,6 @@ DailyPlan.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
     date: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -46,7 +42,14 @@ DailyPlan.init({
     overcome: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'DailyPlan',
+    modelName: 'daily-plan',
+    paranoid: true,
+    defaultScope: {
+        attributes: {
+            exclude: ['deletedAt'],
+        }
+    },
+    timestamps: true,
 });
 
 export default DailyPlan;

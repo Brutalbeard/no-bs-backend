@@ -5,8 +5,6 @@ import {sequelize} from '../utils/sequelize';
 
 class DailyHabit extends Model<InferAttributes<DailyHabit>, InferCreationAttributes<DailyHabit>> {
     declare id: CreationOptional<number>;
-    declare createdAt: Date;
-    declare updatedAt: Date;
     declare date: Date;
     declare madeAPlan: boolean | null;
     declare followedPlan: boolean | null;
@@ -23,8 +21,6 @@ DailyHabit.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
     date: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -38,7 +34,14 @@ DailyHabit.init({
     sevenPlusHoursOfSleep: DataTypes.BOOLEAN,
 }, {
     sequelize,
-    modelName: 'DailyHabit',
+    modelName: 'daily-habit',
+    paranoid: true,
+    defaultScope: {
+        attributes: {
+            exclude: ['deletedAt'],
+        }
+    },
+    timestamps: true,
 });
 
 export default DailyHabit;

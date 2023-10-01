@@ -1,19 +1,26 @@
 import { Context, Next } from 'koa';
+import { sequelize } from '../utils/sequelize';
 import Router from '@koa/router';
+
+let modelRoutePaths = Object.keys(sequelize.models).map((modelName: string) =>
+    modelName = `/${modelName.toLowerCase()}`);
+
+let modelRoutePathsWithId = Object.keys(sequelize.models).map((modelName: string) =>
+    modelName = `/${modelName.toLowerCase()}/:id`);
+// let modelRoutePaths = '[meal|daily-plan|weekly-plan]'
 
 const router = new Router({
     prefix: '/api/v1'
 });
 
-let modelRoutePaths = '[meal|daily-plan|weekly-plan]'
-
 router
-    .get(`/${modelRoutePaths}`, listItems)
-    .get(`/${modelRoutePaths}/:id`, getById)
-    .post(`/${modelRoutePaths}`, newItem)
-    .put(`/${modelRoutePaths}/:id`, updateItem)
-    .delete(`/${modelRoutePaths}/:id`, deleteById);
+    .get(modelRoutePaths, listItems)
+    .get(modelRoutePathsWithId, getById)
+    .post(modelRoutePaths, newItem)
+    .put(modelRoutePathsWithId, updateItem)
+    .delete(modelRoutePathsWithId, deleteById);
 
+console.log(router)
 
 /**
  * This function lists all the items in the database, with optional pagination and includes.
@@ -26,7 +33,7 @@ async function listItems(ctx: Context, next: Next) {
         limit: ctx.request.query.limit ? Number(ctx.request.query.limit) : 50,
         offset: ctx.request.query.offset ? Number(ctx.request.query.offset) : 0,
         //@ts-ignore
-        include: ctx.request.query.include ? ctx.request.query.include.split(',') : []
+        include: ctx.request.query.include ? ctx.request.query.include.split(',') : [],
     })
         .then((items: any[]) => {
             ctx.response.status = 200;
@@ -50,7 +57,7 @@ async function getById(ctx: Context, next: Next) {
     let item: any = await ctx.state.model
         .findByPk(ctx.params.id, {
             //@ts-ignore
-            include: ctx.request.query.include ? ctx.request.query.include.split(',') : []
+            include: ctx.request.query.include ? ctx.request.query.include.split(',') : [],
         })
         .catch((err: Error) => {
             ctx.response.status = 400;
