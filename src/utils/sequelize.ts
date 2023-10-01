@@ -9,7 +9,16 @@ const sequelize = new Sequelize({
     logging: false,
 })
 
-// const sequelize = new Sequelize('sqlite::memory:');
+// const sequelize = new Sequelize({
+//     dialect: 'postgres',
+//     storage: './database.sqlite',
+//     host: process.env.PG_DATABASE_ADDRESS,
+//     port: parseInt(process.env.PG_DATABASE_PORT),
+//     username: process.env.PG_USERNAME,
+//     password: process.env.PG_PASSWORD,
+//     database: process.env.PG_DATABASE_NAME,
+//     logging: false
+// })
 
 async function setupDatabase() {
 

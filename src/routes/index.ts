@@ -7,7 +7,6 @@ let modelRoutePaths = Object.keys(sequelize.models).map((modelName: string) =>
 
 let modelRoutePathsWithId = Object.keys(sequelize.models).map((modelName: string) =>
     modelName = `/${modelName.toLowerCase()}/:id`);
-// let modelRoutePaths = '[meal|daily-plan|weekly-plan]'
 
 const router = new Router({
     prefix: '/api/v1'
@@ -20,8 +19,6 @@ router
     .put(modelRoutePathsWithId, updateItem)
     .delete(modelRoutePathsWithId, deleteById);
 
-console.log(router)
-
 /**
  * This function lists all the items in the database, with optional pagination and includes.
  *
@@ -29,12 +26,16 @@ console.log(router)
  * @param {Next} next - The next function to be executed.
  */
 async function listItems(ctx: Context, next: Next) {
-    await ctx.state.model.findAll({
-        limit: ctx.request.query.limit ? Number(ctx.request.query.limit) : 50,
-        offset: ctx.request.query.offset ? Number(ctx.request.query.offset) : 0,
-        //@ts-ignore
-        include: ctx.request.query.include ? ctx.request.query.include.split(',') : [],
-    })
+    let model = sequelize.models[ctx.request.path.replace('/api/v1/', '').split('/')[0]];
+    console.log(model)
+
+    await model
+        .findAll({
+            limit: ctx.request.query.limit ? Number(ctx.request.query.limit) : 50,
+            offset: ctx.request.query.offset ? Number(ctx.request.query.offset) : 0,
+            //@ts-ignore
+            include: ctx.request.query.include ? ctx.request.query.include.split(',') : [],
+        })
         .then((items: any[]) => {
             ctx.response.status = 200;
             ctx.response.body = items;
@@ -54,7 +55,11 @@ async function listItems(ctx: Context, next: Next) {
  * @param {Next} next - the Koa next callback
  */
 async function getById(ctx: Context, next: Next) {
-    let item: any = await ctx.state.model
+
+    let model = sequelize.models[ctx.request.path.replace('/api/v1/', '').split('/')[0]];
+    console.log(model)
+
+    let item: any = await model
         .findByPk(ctx.params.id, {
             //@ts-ignore
             include: ctx.request.query.include ? ctx.request.query.include.split(',') : [],
@@ -82,8 +87,11 @@ async function getById(ctx: Context, next: Next) {
  * @param next the Koa next callback
  */
 async function newItem(ctx: Context, next: Next) {
-    await new ctx.state.model(ctx.request.body)
-        .save()
+    let model = sequelize.models[ctx.request.path.replace('/api/v1/', '').split('/')[0]];
+    console.log(model)
+
+    await model
+        .create(ctx.request.body)
         .then((item: any) => {
             ctx.response.status = 200;
             ctx.response.body = item;
@@ -103,7 +111,10 @@ async function newItem(ctx: Context, next: Next) {
  * @param next the Koa next callback
  */
 async function updateItem(ctx: Context, next: Next) {
-    let item: any = await ctx.state.model
+    let model = sequelize.models[ctx.request.path.replace('/api/v1/', '').split('/')[0]];
+    console.log(model)
+
+    let item: any = await model
         .findByPk(ctx.params.id)
         .catch((err: Error) => {
             ctx.response.status = 400;
@@ -137,7 +148,10 @@ async function updateItem(ctx: Context, next: Next) {
  * @param next the Koa next callback
  */
 async function deleteById(ctx: Context, next: Next) {
-    let item: any = await ctx.state.model
+    let model = sequelize.models[ctx.request.path.replace('/api/v1/', '').split('/')[0]];
+    console.log(model)
+
+    let item: any = await model
         .findByPk(ctx.params.id)
         .catch((err: Error) => {
             ctx.response.status = 400;

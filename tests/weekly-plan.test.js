@@ -63,7 +63,7 @@ describe('/GET Weekly Plan', () => {
     });
     it('should return 200', (done) => {
         request(app.callback())
-            .get('/api/v1/weekly-plan/?include=weeklyAssessment')
+            .get('/api/v1/weekly-plan/?include=weekly-assessment')
             .expect(200, done);
     });
 });
@@ -113,4 +113,9 @@ describe('/DELETE Weekly Plan', () => {
             .delete(`/api/v1/weekly-plan/99999999`)
             .expect(404, done);
     });
+});
+
+afterAll((done) => {
+    process.emit('SIGINT');
+    done();
 });

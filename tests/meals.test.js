@@ -174,3 +174,8 @@ describe('DELETE /meal by id', () => {
     });
 
 });
+
+afterAll((done) => {
+    process.emit('SIGINT');
+    done();
+});

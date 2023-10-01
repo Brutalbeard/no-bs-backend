@@ -166,3 +166,8 @@ describe('/DELETE Daily Plan', () => {
             });
     });
 });
+
+afterAll((done) => {
+    process.emit('SIGINT');
+    done();
+});

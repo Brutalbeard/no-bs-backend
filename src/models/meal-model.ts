@@ -56,4 +56,4 @@ Meal.init({
     timestamps: true,
 });
 
-export default Meal; 
+export default Meal;

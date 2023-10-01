@@ -22,18 +22,9 @@ app.use(logger());
 
 app.use(async (ctx: Context, next: Next) => {
     console.log(ctx.request);
-    console.log(ctx.request.body);
+    if(ctx.request.body) console.log(ctx.request.body);
     await next();
     console.log(ctx.response);
-});
-
-app.use(async (ctx: Context, next: Next) => {
-    if(RegExp(/\/api\/v1\/meal/).test(ctx.url)) {ctx.state.model = sequelize.models.meal;}
-    else if(RegExp(/\/api\/v1\/daily-plan/).test(ctx.url)) {ctx.state.model = sequelize.models.dailyPlan;}
-    else if(RegExp(/\/api\/v1\/weekly-plan/).test(ctx.url)) {ctx.state.model = sequelize.models.weeklyPlan;}
-    else {ctx.state.model = undefined;}
-
-    return next();
 });
 
 // add a unique request id to each request
@@ -55,7 +46,6 @@ process.on('SIGINT', async () => {
         .close()
         .then(() => {
             console.log('Database connection closed');
-            process.exit(0);
         })
         .catch((err: Error) => {
             console.log('Error closing database connection: ', err.message);
