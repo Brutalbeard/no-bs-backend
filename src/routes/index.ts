@@ -2,7 +2,11 @@ import { Context, Next } from 'koa';
 import Router from '@koa/router';
 import { sequelize } from '../utils/sequelize';
 
-let modelRoutePaths = Object.keys(sequelize.models).join('|');
+let modelRoutePaths = Object.keys(sequelize.models).map((modelName: string) =>
+    modelName = `/${modelName.toLowerCase()}`);
+
+let modelRoutePathsWithId = Object.keys(sequelize.models).map((modelName: string) =>
+modelName = `/${modelName.toLowerCase()}/:id`);
 // let modelRoutePaths = '[meal|daily-plan|weekly-plan]'
 
 const router = new Router({
@@ -10,12 +14,13 @@ const router = new Router({
 });
 
 router
-    .get(`/[meal]`, listItems)
-    .get(`/${modelRoutePaths}/:id`, getById)
-    .post(`/${modelRoutePaths}`, newItem)
-    .put(`/${modelRoutePaths}/:id`, updateItem)
-    .delete(`/${modelRoutePaths}/:id`, deleteById);
+    .get(modelRoutePaths, listItems)
+    .get(modelRoutePathsWithId, getById)
+    .post(modelRoutePaths, newItem)
+    .put(modelRoutePathsWithId, updateItem)
+    .delete(modelRoutePathsWithId, deleteById);
 
+console.log(router)
 
 /**
  * This function lists all the items in the database, with optional pagination and includes.

@@ -40,16 +40,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var router_1 = __importDefault(require("@koa/router"));
 var sequelize_1 = require("../utils/sequelize");
-var modelRoutePaths = Object.keys(sequelize_1.sequelize.models).join('|');
+var modelRoutePaths = Object.keys(sequelize_1.sequelize.models).map(function (modelName) {
+    return modelName = "/" + modelName.toLowerCase();
+});
+var modelRoutePathsWithId = Object.keys(sequelize_1.sequelize.models).map(function (modelName) {
+    return modelName = "/" + modelName.toLowerCase() + "/:id";
+});
 // let modelRoutePaths = '[meal|daily-plan|weekly-plan]'
 var router = new router_1["default"]({
     prefix: '/api/v1'
 });
 router
-    .get("/[meal]", listItems)
-    .get("/" + modelRoutePaths + "/:id", getById)
-    .post("/" + modelRoutePaths, newItem)
-    .put("/" + modelRoutePaths + "/:id", updateItem)["delete"]("/" + modelRoutePaths + "/:id", deleteById);
+    .get(modelRoutePaths, listItems)
+    .get(modelRoutePathsWithId, getById)
+    .post(modelRoutePaths, newItem)
+    .put(modelRoutePathsWithId, updateItem)["delete"](modelRoutePathsWithId, deleteById);
+console.log(router);
 /**
  * This function lists all the items in the database, with optional pagination and includes.
  *
