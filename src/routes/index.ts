@@ -1,12 +1,12 @@
 import { Context, Next } from 'koa';
-import Router from '@koa/router';
 import { sequelize } from '../utils/sequelize';
+import Router from '@koa/router';
 
 let modelRoutePaths = Object.keys(sequelize.models).map((modelName: string) =>
     modelName = `/${modelName.toLowerCase()}`);
 
 let modelRoutePathsWithId = Object.keys(sequelize.models).map((modelName: string) =>
-modelName = `/${modelName.toLowerCase()}/:id`);
+    modelName = `/${modelName.toLowerCase()}/:id`);
 // let modelRoutePaths = '[meal|daily-plan|weekly-plan]'
 
 const router = new Router({
