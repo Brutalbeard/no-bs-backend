@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../dist/app').default;
 
 describe('Liveness Endpoint', () => {
-    it('should return 400 because too soon', async () => {
+    it('should return 500 because too soon', async () => {
         const response = await request(app.callback()).get('/api/v1/liveness');
         expect(response.status).toBe(500);
     });
