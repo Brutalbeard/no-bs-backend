@@ -4,7 +4,7 @@ const app = require('../dist/app').default;
 let testId = 0;
 
 describe('/POST Daily Plan', () => {
-    test('should return 400', done =>{
+    test('should return 400', done => {
         request(app.callback())
             .post('/api/v1/daily-plan/')
             .then((response) => {
@@ -12,7 +12,7 @@ describe('/POST Daily Plan', () => {
                 done();
             });
     });
-    test('should return 200', done =>{
+    test('should return 200', done => {
         request(app.callback())
             .post('/api/v1/daily-plan/')
             .send({
@@ -29,7 +29,7 @@ describe('/POST Daily Plan', () => {
                 done();
             });
     });
-    test('should return 400', done =>{
+    test('should return 400', done => {
         request(app.callback())
             .post('/api/v1/daily-plan/')
             .send({
@@ -49,7 +49,7 @@ describe('/POST Daily Plan', () => {
 
 
 describe('/GET Daily Plan', () => {
-    test('should return 200', done =>{
+    test('should return 200', done => {
         request(app.callback())
             .get('/api/v1/daily-plan/')
             .then((response) => {
@@ -57,7 +57,7 @@ describe('/GET Daily Plan', () => {
                 done();
             });
     });
-    test('should return 200', done =>{
+    test('should return 200', done => {
         request(app.callback())
             .get(`/api/v1/daily-plan/?limit=1`)
             .then((response) => {
@@ -65,7 +65,7 @@ describe('/GET Daily Plan', () => {
                 done();
             });
     });
-    test('should return 200', done =>{
+    test('should return 200', done => {
         request(app.callback())
             .get(`/api/v1/daily-plan/?offset=1`)
             .then((response) => {
@@ -73,7 +73,7 @@ describe('/GET Daily Plan', () => {
                 done();
             });
     });
-    test('should return 404', done =>{
+    test('should return 404', done => {
         request(app.callback())
             .get('/api/v1/daily-plan/random')
             .then((response) => {
@@ -81,7 +81,7 @@ describe('/GET Daily Plan', () => {
                 done();
             });
     });
-    test('should return an array', done =>{
+    test('should return an array', done => {
         request(app.callback())
             .get('/api/v1/daily-plan/?limit=1')
             .then((response) => {
@@ -89,42 +89,42 @@ describe('/GET Daily Plan', () => {
                 done();
             });
     });
-    test('should return an object', done =>{
+    test('should return an object', done => {
         request(app.callback())
             .get(`/api/v1/daily-plan/${testId}`)
             .then((response) => {
                 expect(response.body).toEqual(expect.any(Object));
                 done();
             });
-        });
-    test('string id should fail', done =>{
+    });
+    test('string id should fail', done => {
         request(app.callback())
             .get(`/api/v1/daily-plan/random`)
             .then((response) => {
                 expect(response.body).toEqual(expect.any(Object));
                 done();
             });
-        });
-    test('string id should fail', done =>{
+    });
+    test('string id should fail', done => {
         request(app.callback())
             .get(`/api/v1/daily-plan/random`)
             .then((response) => {
                 expect(response.statusCode).toEqual(404);
                 done();
             });
-        });
-    test('bad id should fail', done =>{
+    });
+    test('bad id should fail', done => {
         request(app.callback())
             .get(`/api/v1/daily-plan/80000`)
             .then((response) => {
                 expect(response.statusCode).toEqual(404);
                 done();
             });
-        });
+    });
 });
 
 describe('/PUT Daily Plan', () => {
-    test('should return 200', done =>{
+    test('should return 200', done => {
         request(app.callback())
             .put(`/api/v1/daily-plan/${testId}`)
             .send({
@@ -135,7 +135,7 @@ describe('/PUT Daily Plan', () => {
                 done();
             });
     });
-    test('should return 400', done =>{
+    test('should return 400', done => {
         request(app.callback())
             .put(`/api/v1/daily-plan/80000`)
             .send({
@@ -149,7 +149,7 @@ describe('/PUT Daily Plan', () => {
 });
 
 describe('/DELETE Daily Plan', () => {
-    test('should return 200', done =>{
+    test('should return 204', done => {
         request(app.callback())
             .delete(`/api/v1/daily-plan/${testId}`)
             .then((response) => {
@@ -157,7 +157,7 @@ describe('/DELETE Daily Plan', () => {
                 done();
             });
     });
-    test('should return 400', done =>{
+    test('should return 400', done => {
         request(app.callback())
             .delete(`/api/v1/daily-plan/80000`)
             .then((response) => {
